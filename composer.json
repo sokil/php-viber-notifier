@@ -1,0 +1,58 @@
+{
+  "name": "sokil/php-viber-notifier",
+  "description": "Allows to implement subscription on Viber's account and broadcast notifications to different groups of subscribed userss,",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["php", "viber"],
+  "homepage": "https://github.com/sokil/php-viber-notifier",
+  "authors": [
+    {
+      "name": "Dmytro Sokil",
+      "email": "dmytro.sokil@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Sokil\\Viber\\Notifier\\": ["src/"]
+    },
+    "classmap": ["/src/Tool/Interop"]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sokil\\Viber\\Notifier\\\\": ["tests/"]
+    }
+  },
+  "require": {
+    "php": ">=5.5",
+    "ext-json": "^1.7"
+  },
+  "require-dev": {
+    "fig/http-message-util": "^1.1",
+    "psr/http-message": "^1.0",
+    "psr/http-server-handler": "^1.0",
+    "psr/http-client": "^1.0",
+    "psr/http-factory": "^1.0",
+    "phpunit/phpunit": "^8.4.3",
+    "php-coveralls/php-coveralls": "^2.2.0",
+    "squizlabs/php_codesniffer": "^3.5.2",
+    "phpmd/phpmd" : "@stable",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+    "slevomat/coding-standard": "^5.0"
+  },
+  "suggest": {
+    "fig/http-message-util": "For supporting of PSR HTTP Clients",
+    "psr/http-message": "For supporting of PSR HTTP Clients",
+    "psr/http-server-handler": "For supporting of PSR HTTP Clients",
+    "psr/http-client": "For supporting of PSR HTTP Clients",
+    "psr/http-factory": "For supporting of PSR HTTP Clients"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit",
+    "cover": "./vendor/bin/phpunit --coverage-clover ./build/phpunit/clover.xml",
+    "coveralls": "./vendor/bin/php-coveralls -v",
+    "check-style": "./vendor/bin/phpcs",
+    "fix-style": "./vendor/bin/phpcbf",
+    "bench": "phpbench run benchmarks/  --report=default",
+    "infection": "infection"
+  }
+}

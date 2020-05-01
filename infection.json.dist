@@ -1,0 +1,14 @@
+{
+    "timeout": 300,
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "phpUnit": {
+        "configDir": "tests"
+    },
+    "logs": {
+        "text": "tmp"
+    }
+}
