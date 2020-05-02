@@ -17,7 +17,7 @@ class SetWebHookCommandHandlerTest extends TestCase
             $webHookUrl
         );
 
-        $viberClient = $this->createMock(ViberClientInterface::class);
+        $viberClient = $this->getMockBuilder(ViberClientInterface::class)->getMock();
         $viberClient
             ->expects($this->once())
             ->method('setWebHookUrl')

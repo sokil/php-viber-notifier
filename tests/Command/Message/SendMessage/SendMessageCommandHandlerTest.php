@@ -21,7 +21,7 @@ class SendMessageCommandHandlerTest extends TestCase
         $senderName = 'Sender name';
         $message = 'Message text';
 
-        $viberClient = $this->createMock(ViberClientInterface::class);
+        $viberClient = $this->getMockBuilder(ViberClientInterface::class)->getMock();
         $viberClient
             ->expects($this->once())
             ->method('broadcastMessage')
@@ -40,7 +40,7 @@ class SendMessageCommandHandlerTest extends TestCase
                 )
             );
 
-        $subscriberRepository = $this->createMock(SubscribersRepositoryInterface::class);
+        $subscriberRepository = $this->getMockBuilder(SubscribersRepositoryInterface::class)->getMock();
         $subscriberRepository
             ->expects($this->once())
             ->method('findAllByRole')

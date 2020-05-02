@@ -71,7 +71,7 @@ class HandleWebHookCommandHandlerTest extends TestCase
             $event
         );
 
-        $subscribersRepository = $this->createMock(SubscribersRepositoryInterface::class);
+        $subscribersRepository = $this->getMockBuilder(SubscribersRepositoryInterface::class)->getMock();
         $subscribersRepository
             ->expects($this->once())
             ->method('subscribe')
@@ -104,7 +104,7 @@ class HandleWebHookCommandHandlerTest extends TestCase
             ]
         );
 
-        $subscribersRepository = $this->createMock(SubscribersRepositoryInterface::class);
+        $subscribersRepository = $this->getMockBuilder(SubscribersRepositoryInterface::class)->getMock();
         $subscribersRepository
             ->expects($this->once())
             ->method('unsubscribe')
