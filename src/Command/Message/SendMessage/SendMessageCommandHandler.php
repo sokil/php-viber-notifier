@@ -37,7 +37,7 @@ class SendMessageCommandHandler implements CommandHandlerInterface
         $response = $this->viberClient->broadcastMessage(
             $command->getSenderName(),
             $command->getText(),
-            $command->getRole()
+            $command->getSubscriberIdCollection()
         );
 
         return $response;

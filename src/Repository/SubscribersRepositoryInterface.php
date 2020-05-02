@@ -2,7 +2,6 @@
 
 namespace Sokil\Viber\Notifier\Repository;
 
-use Sokil\Viber\Notifier\Entity\Subscriber;
 use Sokil\Viber\Notifier\Entity\Role;
 use Sokil\Viber\Notifier\Entity\SubscriberCollection;
 use Sokil\Viber\Notifier\Entity\SubscriberId;

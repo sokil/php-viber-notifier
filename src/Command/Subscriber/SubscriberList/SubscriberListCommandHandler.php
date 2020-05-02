@@ -2,7 +2,9 @@
 
 namespace Sokil\Viber\Notifier\Command\Subscriber\SubscriberList;
 
-use Sokil\Viber\Notifier\Entity\Subscriber;
+use Sokil\Viber\Notifier\Command\Subscriber\SubscriberList\Result\Subscriber;
+use Sokil\Viber\Notifier\Command\Subscriber\SubscriberList\Result\SubscriberList;
+use Sokil\Viber\Notifier\Entity\Subscriber as SubscriberEntity;
 use Sokil\Viber\Notifier\Repository\SubscribersRepositoryInterface;
 use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
 
@@ -23,6 +25,8 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
 
     /**
      * @param SubscriberListCommand $command
+     *
+     * @return SubscriberList
      */
     public function handle($command)
     {
@@ -37,13 +41,15 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
 
         $subscribers = $this->subscriberRepository->findAllByRole($command->getRole());
 
-        return $subscribers->map(
-            function(Subscriber $subscriber) {
-                return [
-                    'id' => $subscriber->getId()->getValue(),
-                    'name' => $subscriber->getName(),
-                ];
-            }
+        return new SubscriberList(
+            $subscribers->map(
+                function(SubscriberEntity $subscriber) {
+                    return new Subscriber(
+                        $subscriber->getId(),
+                        $subscriber->getName()
+                    );
+                }
+            )
         );
     }
 

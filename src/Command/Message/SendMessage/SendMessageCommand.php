@@ -2,7 +2,7 @@
 
 namespace Sokil\Viber\Notifier\Command\Message\SendMessage;
 
-use Sokil\Viber\Notifier\Entity\Role;
+use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
 
 class SendMessageCommand
 {
@@ -17,31 +17,31 @@ class SendMessageCommand
     private $text;
 
     /**
-     * @var Role
+     * @var SubscriberIdCollection
      */
-    private $role;
+    private $subscriberIdCollection;
 
     /**
      * @param string $senderName
      * @param string $text
-     * @param Role|null $role
+     * @param SubscriberIdCollection subscriberIdCollection
      */
     public function __construct(
         $senderName,
         $text,
-        Role $role = null
+        SubscriberIdCollection $subscriberIdCollection
     ) {
-        if (empty($senderName)) {
+        if (empty($senderName) || !is_string($senderName)) {
             throw new \InvalidArgumentException('Sender name not specified');
         }
 
-        if (empty($text)) {
+        if (empty($text) || !is_string($text)) {
             throw new \InvalidArgumentException('Text not specified');
         }
 
         $this->senderName = $senderName;
         $this->text = $text;
-        $this->role = $role;
+        $this->subscriberIdCollection = $subscriberIdCollection;
     }
 
     /**
@@ -61,10 +61,10 @@ class SendMessageCommand
     }
 
     /**
-     * @return Role
+     * @return SubscriberIdCollection
      */
-    public function getRole()
+    public function getSubscriberIdCollection()
     {
-        return $this->role;
+        return $this->subscriberIdCollection;
     }
 }
