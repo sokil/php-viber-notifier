@@ -42,11 +42,12 @@ class PsrHttpClient implements HttpClientInterface
     }
     /**
      * @param string $uri
+     * @param array $headers
      * @param array $body
      *
      * @return array
      */
-    public function request($uri, array $body)
+    public function request($uri, array $headers, array $body)
     {
         $requestBody = $this->httpStreamFactoryInterface->createStream(
             \json_encode($body)
@@ -56,6 +57,10 @@ class PsrHttpClient implements HttpClientInterface
             RequestMethodInterface::METHOD_POST,
             $uri
         );
+
+        foreach ($headers as $headerName => $headerValue) {
+            $request = $request->withHeader($headerName, $headerValue);
+        }
 
         $request = $request->withBody($requestBody);
 
