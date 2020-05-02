@@ -39,6 +39,10 @@ class SendMessageCommand
             throw new \InvalidArgumentException('Text not specified');
         }
 
+        if (count($subscriberIdCollection) === 0) {
+            throw new \InvalidArgumentException('Empty sender list specified');
+        }
+
         $this->senderName = $senderName;
         $this->text = $text;
         $this->subscriberIdCollection = $subscriberIdCollection;

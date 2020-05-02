@@ -2,7 +2,6 @@
 
 namespace Sokil\Viber\Notifier\Command\WebHook\HandleWebHook;
 
-use Sokil\Viber\Notifier\Entity\Role;
 use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Repository\SubscribersRepositoryInterface;
 use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
@@ -10,24 +9,15 @@ use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
 class HandleWebHookCommandHandler implements CommandHandlerInterface
 {
     /**
-     * Role, used to initialise subscriber
-     *
-     * @var Role
-     */
-    private $defaultRole;
-
-    /**
      * @var SubscribersRepositoryInterface
      */
     private $subscriberRepository;
 
     /**
-     * @param Role $defaultRole
      * @param SubscribersRepositoryInterface $subscriberRepository
      */
-    public function __construct(Role $defaultRole, SubscribersRepositoryInterface $subscriberRepository)
+    public function __construct(SubscribersRepositoryInterface $subscriberRepository)
     {
-        $this->defaultRole = $defaultRole;
         $this->subscriberRepository = $subscriberRepository;
     }
 
@@ -58,8 +48,7 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
                 if (isset($request['user']['id'])) {
                     $this->subscriberRepository->subscribe(
                         new SubscriberId($request['user']['id']),
-                        $request['user']['name'],
-                        $this->defaultRole
+                        $request['user']['name']
                     );
                 }
 

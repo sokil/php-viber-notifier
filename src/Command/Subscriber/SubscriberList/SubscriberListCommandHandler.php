@@ -39,7 +39,11 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
             );
         }
 
-        $subscribers = $this->subscriberRepository->findAllByRole($command->getRole());
+        $subscribers = $this->subscriberRepository->findAllByRole(
+            $command->getRole(),
+            $command->getLimit(),
+            $command->getOffset()
+        );
 
         return new SubscriberList(
             $subscribers->map(
@@ -52,5 +56,4 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
             )
         );
     }
-
 }

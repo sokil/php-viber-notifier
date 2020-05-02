@@ -5,7 +5,7 @@ namespace Sokil\Viber\Notifier\Command\WebHook\HandleWebHook;
 use PHPUnit\Framework\TestCase;
 use Sokil\Viber\Notifier\Command\WebHook\SetWebHook\SetWebHookCommand;
 use Sokil\Viber\Notifier\Command\WebHook\SetWebHook\SetWebHookCommandHandler;
-use Sokil\Viber\Notifier\Service\ViberClient\ViberClient;
+use Sokil\Viber\Notifier\Service\ViberClient\ViberClientInterface;
 
 class SetWebHookCommandHandlerTest extends TestCase
 {
@@ -17,7 +17,7 @@ class SetWebHookCommandHandlerTest extends TestCase
             $webHookUrl
         );
 
-        $viberClient = $this->createMock(ViberClient::class);
+        $viberClient = $this->createMock(ViberClientInterface::class);
         $viberClient
             ->expects($this->once())
             ->method('setWebHookUrl')

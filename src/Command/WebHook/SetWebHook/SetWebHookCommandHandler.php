@@ -4,19 +4,19 @@ namespace Sokil\Viber\Notifier\Command\WebHook\SetWebHook;
 
 use Sokil\Viber\Notifier\Command\WebHook\HandleWebHook\HandleWebHookCommand;
 use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
-use Sokil\Viber\Notifier\Service\ViberClient\ViberClient;
+use Sokil\Viber\Notifier\Service\ViberClient\ViberClientInterface;
 
 class SetWebHookCommandHandler implements CommandHandlerInterface
 {
     /**
-     * @var ViberClient
+     * @var ViberClientInterface
      */
     private $viberClient;
 
     /**
-     * @param ViberClient $viberClient
+     * @param ViberClientInterface $viberClient
      */
-    public function __construct(ViberClient $viberClient)
+    public function __construct(ViberClientInterface $viberClient)
     {
         $this->viberClient = $viberClient;
     }

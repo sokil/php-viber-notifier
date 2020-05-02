@@ -11,15 +11,8 @@ interface SubscribersRepositoryInterface
     /**
      * @param SubscriberId $subscriberId
      * @param string $subscriberName
-     * @param Role $role
      */
-    public function subscribe(SubscriberId $subscriberId, $subscriberName, Role $role);
-
-    /**
-     * @param SubscriberId $subscriberId
-     * @param Role $role
-     */
-    public function updateRole(SubscriberId $subscriberId, Role $role);
+    public function subscribe(SubscriberId $subscriberId, $subscriberName);
 
     /**
      * @param string $subscriberId
@@ -28,8 +21,14 @@ interface SubscribersRepositoryInterface
 
     /**
      * @param Role|null $role
+     * @param int $limit
+     * @param int $offset
      *
      * @return SubscriberCollection
      */
-    public function findAllByRole(Role $role = null);
+    public function findAllByRole(
+        Role $role = null,
+        $limit,
+        $offset
+    );
 }

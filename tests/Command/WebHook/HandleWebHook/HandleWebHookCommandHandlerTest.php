@@ -71,8 +71,6 @@ class HandleWebHookCommandHandlerTest extends TestCase
             $event
         );
 
-        $defaultRole = new Role('guest');
-
         $subscribersRepository = $this->createMock(SubscribersRepositoryInterface::class);
         $subscribersRepository
             ->expects($this->once())
@@ -85,12 +83,10 @@ class HandleWebHookCommandHandlerTest extends TestCase
 
                     return true;
                 }),
-                $viberUserName,
-                $defaultRole
+                $viberUserName
             );
 
         $commandHandler = new HandleWebHookCommandHandler(
-            $defaultRole,
             $subscribersRepository
         );
 
@@ -123,7 +119,6 @@ class HandleWebHookCommandHandlerTest extends TestCase
             );
 
         $commandHandler = new HandleWebHookCommandHandler(
-            new Role('guest'),
             $subscribersRepository
         );
 

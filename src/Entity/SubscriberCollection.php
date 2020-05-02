@@ -28,8 +28,9 @@ class SubscriberCollection extends Collection
     {
         return new SubscriberIdCollection(
             $this->reduce(
-                function(Subscriber $subscriber) {
-                    return $subscriber->getId();
+                function(array $carry, Subscriber $subscriber) {
+                    $carry[] = $subscriber->getId();
+                    return $carry;
                 }
             )
         );

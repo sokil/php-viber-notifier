@@ -6,7 +6,10 @@ use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
 use Sokil\Viber\Notifier\Service\ViberClient\Exception\CanNotSetWebHookException;
 use Sokil\Viber\Notifier\Tools\Http\Client\HttpClientInterface;
 
-class ViberClient
+/**
+ * Basic implementation of Viber client
+ */
+class ViberClient implements ViberClientInterface
 {
     const BASE_URI ='https://chatapi.viber.com';
 
@@ -21,7 +24,6 @@ class ViberClient
     private $authToken;
 
     /**
-     * ViberClient constructor.
      * @param HttpClientInterface $httpClient
      * @param string $authToken
      */
@@ -34,13 +36,11 @@ class ViberClient
     /**
      * @param string $url
      *
-     * @return array
-     *
      * @throws CanNotSetWebHookException
      */
-    public function setWebHookUrl(string $url)
+    public function setWebHookUrl($url)
     {
-        return $this->httpClient->request(
+        $response = $this->httpClient->request(
             self::BASE_URI . '/pa/set_webhook',
             [
                 'X-Viber-Auth-Token' => $this->authToken,
@@ -56,14 +56,14 @@ class ViberClient
                 "send_photo" => true,
             ]
         );
+
+        // handle response error
     }
 
     /**
      * @param string $senderName
      * @param string $message
      * @param SubscriberIdCollection $subscriberIdCollection
-     *
-     * @return array[]
      */
     public function broadcastMessage(
         $senderName,
@@ -81,7 +81,7 @@ class ViberClient
         $result = [];
 
         foreach ($subscriberIdCollection as $subscriberId) {
-            $result[$subscriberId->getUserId()] = $this->httpClient->request(
+            $response = $this->httpClient->request(
                 self::BASE_URI . '/pa/set_webhook',
                 [
                     'X-Viber-Auth-Token' => $this->authToken,
@@ -95,8 +95,10 @@ class ViberClient
                     'text' => $message,
                 ]
             );
+
+            $result[$subscriberId->getUserId()] = $response;
         }
 
-        return $result;
+        // todo: handle response
     }
 }
