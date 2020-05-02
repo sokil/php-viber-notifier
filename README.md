@@ -12,7 +12,7 @@ Allows to implement subscription on Viber's account and broadcast notifications 
 composer require sokil/php-viber-notifier
 ```
 
-## Basic usage
+## Usage
 
 To start sending notifications via Viber we need to [create bot](https://developers.viber.com/docs/api/rest-bot-api/#get-started) first.
 
@@ -26,4 +26,11 @@ Users may have different roles, so we may broadcast different messages to differ
 First we need to implement storage where subscribed Viber users and their roles will be stored.
 
 Storage must implement `SubscribersRepositoryInterface`. 
+
+### Viber chat bot client
+
+If you already have convigured Viber bot in your project, just create adapter by implementing interface `ViberClientInterface`.
+If you have no chatbot in you project, use basic implementation `ViberClient`.
+
+
 
