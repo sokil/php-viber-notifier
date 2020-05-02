@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Sokil\Viber\Notifier\Entity\Role;
 use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Repository\SubscribersRepositoryInterface;
-use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
 
 class HandleWebHookCommandHandlerTest extends TestCase
 {

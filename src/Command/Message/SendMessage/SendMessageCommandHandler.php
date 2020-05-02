@@ -13,6 +13,14 @@ class SendMessageCommandHandler implements CommandHandlerInterface
     private $viberClient;
 
     /**
+     * @param ViberClient $viberClient
+     */
+    public function __construct(ViberClient $viberClient)
+    {
+        $this->viberClient = $viberClient;
+    }
+
+    /**
      * @param SendMessageCommand $command
      */
     public function handle($command)

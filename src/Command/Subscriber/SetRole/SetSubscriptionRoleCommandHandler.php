@@ -13,6 +13,14 @@ class SetSubscriptionRoleCommandHandler implements CommandHandlerInterface
     private $subscriberRepository;
 
     /**
+     * @param SubscribersRepositoryInterface $subscriberRepository
+     */
+    public function __construct(SubscribersRepositoryInterface $subscriberRepository)
+    {
+        $this->subscriberRepository = $subscriberRepository;
+    }
+
+    /**
      * @param SetSubscriptionRoleCommand $command
      */
     public function handle($command)

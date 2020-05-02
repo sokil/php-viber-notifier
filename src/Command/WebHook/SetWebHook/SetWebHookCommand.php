@@ -10,7 +10,6 @@ class SetWebHookCommand
     private $url;
 
     /**
-     * SetWebHookCommand constructor.
      * @param string $url
      */
     public function __construct($url)

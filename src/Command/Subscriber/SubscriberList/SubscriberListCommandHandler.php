@@ -14,6 +14,14 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
     private $subscriberRepository;
 
     /**
+     * @param SubscribersRepositoryInterface $subscriberRepository
+     */
+    public function __construct(SubscribersRepositoryInterface $subscriberRepository)
+    {
+        $this->subscriberRepository = $subscriberRepository;
+    }
+
+    /**
      * @param SubscriberListCommand $command
      */
     public function handle($command)
