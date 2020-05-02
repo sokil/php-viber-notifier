@@ -14,8 +14,7 @@
   "autoload": {
     "psr-4": {
       "Sokil\\Viber\\Notifier\\": ["src/"]
-    },
-    "classmap": ["/src/Tool/Interop"]
+    }
   },
   "autoload-dev": {
     "psr-4": {
