@@ -15,6 +15,11 @@ php:
 matrix:
   allow_failures:
     - php: nightly
+  include:
+    - php: "5.5"
+      dist: trusty
+    - php: "5.5"
+      dist: trusty
 
 before_script:
   - PHP_VERSION=$(php -r 'echo phpversion();')
