@@ -30,7 +30,6 @@ before_script:
 
 script:
   - composer cover
-  - composer check-style
 
 after_script:
   - composer coveralls
