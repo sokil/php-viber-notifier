@@ -30,7 +30,26 @@ class ViberClientTest extends TestCase
 
                     return true;
                 })
+            )
+            ->willReturn(
+                [
+                    "status" => 0,
+                    "status_message" => "ok",
+                    "chat_hostname" => "SN-CHAT-03_",
+                    "event_types" => [
+                        "subscribed",
+                        "unsubscribed",
+                        "webhook",
+                        "conversation_started",
+                        "action",
+                        "delivered",
+                        "failed",
+                        "message",
+                        "seen"
+                    ]
+                ]
             );
+
         $viberClient = new ViberClient(
             $httpClient,
             $authToken

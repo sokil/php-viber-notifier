@@ -3,11 +3,9 @@
 namespace Sokil\Viber\Notifier\Tools\Http\Client;
 
 use Fig\Http\Message\RequestMethodInterface;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Sokil\Viber\Notifier\Service\ViberClient\Exception\CanNotSetWebHookException;
 
 class PsrHttpClient implements HttpClientInterface
 {
@@ -64,11 +62,8 @@ class PsrHttpClient implements HttpClientInterface
 
         $request = $request->withBody($requestBody);
 
-        try {
-            $response = $this->httpClient->sendRequest($request);
-        } catch (ClientExceptionInterface $e) {
-            throw new CanNotSetWebHookException($e->getMessage(), $e->getCode(), $e);
-        }
+        $response = $this->httpClient->sendRequest($request);
+
 
         $responseBody = \json_decode($response->getBody()->getContents(), true);
 

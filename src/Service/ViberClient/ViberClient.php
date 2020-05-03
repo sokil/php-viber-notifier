@@ -40,24 +40,40 @@ class ViberClient implements ViberClientInterface
      */
     public function setWebHookUrl($url)
     {
-        $response = $this->httpClient->request(
-            self::BASE_URI . '/pa/set_webhook',
-            [
-                'X-Viber-Auth-Token' => $this->authToken,
-            ],
-            [
-                "url" => (string)$url,
-                "event_types" => [
-                    "subscribed",
-                    "unsubscribed",
-                    "conversation_started",
+        try {
+            $response = $this->httpClient->request(
+                self::BASE_URI . '/pa/set_webhook',
+                [
+                    'X-Viber-Auth-Token' => $this->authToken,
                 ],
-                "send_name" => true,
-                "send_photo" => true,
-            ]
-        );
+                [
+                    "url" => (string)$url,
+                    "event_types" => [
+                        "subscribed",
+                        "unsubscribed",
+                        "conversation_started",
+                    ],
+                    "send_name" => true,
+                    "send_photo" => true,
+                ]
+            );
+        } catch (\Exception $e) {
+            throw new CanNotSetWebHookException(
+                'Error requesting Viber server to set web hook',
+                $e->getCode(),
+                $e
+            );
+        }
 
         // handle response error
+        if (empty($response['status_message']) || $response['status_message'] !== 'ok') {
+            throw new CanNotSetWebHookException(
+                sprintf(
+                    'Viber server returns error "%s" while trying to set web hool',
+                    isset($response['status_message']) ? $response['status_message'] : 'none'
+                )
+            );
+        }
     }
 
     /**
