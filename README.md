@@ -4,7 +4,7 @@ Allows to implement subscription on Viber's account and broadcast notifications 
 
 [![Total Downloads](http://img.shields.io/packagist/dt/sokil/php-viber-notifier.svg)](https://packagist.org/packages/sokil/php-viber-notifier)
 [![Build Status](https://travis-ci.org/sokil/php-viber-notifier.png?branch=master&2)](https://travis-ci.org/sokil/php-viber-notifier)
-[![Coverage Status](https://coveralls.io/repos/sokil/php-viber-notifier/badge.png)](https://coveralls.io/r/sokil/php-viber-notifier)
+[![Coverage Status](https://coveralls.io/repos/github/sokil/php-viber-notifier/badge.svg?branch=master)](https://coveralls.io/github/sokil/php-viber-notifier?branch=master)
 
 ## Installation
 
