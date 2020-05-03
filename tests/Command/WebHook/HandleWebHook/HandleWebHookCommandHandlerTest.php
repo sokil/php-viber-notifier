@@ -3,7 +3,6 @@
 namespace Sokil\Viber\Notifier\Command\WebHook\HandleWebHook;
 
 use PHPUnit\Framework\TestCase;
-use Sokil\Viber\Notifier\Entity\Role;
 use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Repository\SubscribersRepositoryInterface;
 
