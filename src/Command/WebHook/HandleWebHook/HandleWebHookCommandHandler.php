@@ -61,7 +61,7 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
                 break;
 
             default:
-                throw new \InvalidArgumentException('Unsupported event');
+                throw new \InvalidArgumentException(sprintf('Unsupported event %s', $event));
         }
     }
 }
