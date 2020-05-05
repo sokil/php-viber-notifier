@@ -25,6 +25,8 @@ interface ViberClientInterface
      * @param string $senderName
      * @param string $message
      * @param SubscriberIdCollection $subscriberIdCollection
+     *
+     * @return bool[]
      */
     public function broadcastMessage($senderName, $message, SubscriberIdCollection $subscriberIdCollection);
 }

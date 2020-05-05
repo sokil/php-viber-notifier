@@ -80,6 +80,8 @@ class ViberClient implements ViberClientInterface
      * @param string $senderName
      * @param string $message
      * @param SubscriberIdCollection $subscriberIdCollection
+     *
+     * @return bool[]
      */
     public function broadcastMessage(
         $senderName,
@@ -98,7 +100,7 @@ class ViberClient implements ViberClientInterface
 
         foreach ($subscriberIdCollection as $subscriberId) {
             $response = $this->httpClient->request(
-                self::BASE_URI . '/pa/set_webhook',
+                self::BASE_URI . '/pa/send_message',
                 [
                     'X-Viber-Auth-Token' => $this->authToken,
                 ],
@@ -112,9 +114,9 @@ class ViberClient implements ViberClientInterface
                 ]
             );
 
-            $result[$subscriberId->getUserId()] = $response;
+            $result[$subscriberId->getUserId()] = empty($response['status_message']) || $response['status_message'] !== 'ok';
         }
 
-        // todo: handle response
+        return $result;
     }
 }
