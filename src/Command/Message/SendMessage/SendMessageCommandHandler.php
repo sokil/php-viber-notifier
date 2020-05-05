@@ -22,6 +22,8 @@ class SendMessageCommandHandler implements CommandHandlerInterface
 
     /**
      * @param SendMessageCommand $command
+     *
+     * @return bool[]
      */
     public function handle($command)
     {

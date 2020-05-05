@@ -99,22 +99,27 @@ class ViberClient implements ViberClientInterface
         $result = [];
 
         foreach ($subscriberIdCollection as $subscriberId) {
-            $response = $this->httpClient->request(
-                self::BASE_URI . '/pa/send_message',
-                [
-                    'X-Viber-Auth-Token' => $this->authToken,
-                ],
-                [
-                    'receiver' => $subscriberId->getValue(),
-                    'type' => 'text',
-                    'sender' => [
-                        'name' => $senderName,
+            try {
+                $response = $this->httpClient->request(
+                    self::BASE_URI . '/pa/send_message',
+                    [
+                        'X-Viber-Auth-Token' => $this->authToken,
                     ],
-                    'text' => $message,
-                ]
-            );
+                    [
+                        'receiver' => $subscriberId->getValue(),
+                        'type' => 'text',
+                        'sender' => [
+                            'name' => $senderName,
+                        ],
+                        'text' => $message,
+                    ]
+                );
+            } catch (\Exception $e) {
+                $response = null;
+            }
 
-            $result[$subscriberId->getUserId()] = empty($response['status_message']) || $response['status_message'] !== 'ok';
+            $result[$subscriberId->getValue()] = empty($response['status_message'])
+                || $response['status_message'] !== 'ok';
         }
 
         return $result;
