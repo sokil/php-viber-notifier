@@ -41,6 +41,11 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
         // route
         switch ($event) {
             case 'webhook':
+            case 'seen':
+            case 'action':
+            case 'delivered':
+            case 'failed':
+            case 'message':
                 break;
 
             case 'subscribed':
@@ -61,7 +66,7 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
                 break;
 
             default:
-                throw new \InvalidArgumentException(sprintf('Unsupported event %s', $event));
+                throw new \InvalidArgumentException(sprintf('Unsupported event "%s"', $event));
         }
     }
 }
