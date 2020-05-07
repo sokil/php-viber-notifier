@@ -44,7 +44,7 @@ class SendMessageCommandHandler implements CommandHandlerInterface
                 $command->getSubscriberIdCollection()->current()
             );
 
-            $statusCollection = new StatusCollection($status);
+            $statusCollection = new StatusCollection([$status]);
         } else {
             $statusCollection = $this->viberClient->broadcastMessage(
                 $command->getSenderName(),
