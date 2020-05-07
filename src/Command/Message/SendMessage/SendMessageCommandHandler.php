@@ -3,6 +3,7 @@
 namespace Sokil\Viber\Notifier\Command\Message\SendMessage;
 
 use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
+use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
 use Sokil\Viber\Notifier\Service\ViberClient\ViberClientInterface;
 
 class SendMessageCommandHandler implements CommandHandlerInterface
@@ -23,7 +24,7 @@ class SendMessageCommandHandler implements CommandHandlerInterface
     /**
      * @param SendMessageCommand $command
      *
-     * @return bool[]
+     * @return StatusCollection
      */
     public function handle($command)
     {
