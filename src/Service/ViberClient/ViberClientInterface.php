@@ -26,7 +26,7 @@ interface ViberClientInterface
      * @param string $message
      * @param SubscriberIdCollection $subscriberIdCollection
      *
-     * @return bool[]
+     * @return bool[] Key is subscriber id and value is status of send (true - was send, false - not sent)
      */
     public function broadcastMessage($senderName, $message, SubscriberIdCollection $subscriberIdCollection);
 }

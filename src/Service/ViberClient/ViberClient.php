@@ -96,7 +96,7 @@ class ViberClient implements ViberClientInterface
             throw new \InvalidArgumentException('Message not specified');
         }
 
-        $result = [];
+        $wasSent = [];
 
         foreach ($subscriberIdCollection as $subscriberId) {
             try {
@@ -118,10 +118,10 @@ class ViberClient implements ViberClientInterface
                 $response = null;
             }
 
-            $result[$subscriberId->getValue()] = empty($response['status_message'])
-                || $response['status_message'] !== 'ok';
+            $wasSent[$subscriberId->getValue()] = !empty($response['status_message'])
+                && $response['status_message'] === 'ok';
         }
 
-        return $result;
+        return $wasSent;
     }
 }
