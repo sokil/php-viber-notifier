@@ -16,8 +16,11 @@ class SendMessageCommandHandlerTest extends TestCase
 {
     public function testBroadcast()
     {
-        $subscriberId = new SubscriberId('==xxffgg==');
-        $subscriberName = 'Subscriber name';
+        $subscriberIdCollection = new SubscriberIdCollection([
+            new SubscriberId('==aaa=='),
+            new SubscriberId('==bbb==')
+        ]);
+
         $senderName = 'Sender name';
         $message = 'Message text';
 
@@ -29,11 +32,11 @@ class SendMessageCommandHandlerTest extends TestCase
                 $senderName,
                 $message,
                 $this->callback(
-                    function($subscriberIdCollection) use ($subscriberId) {
+                    function($actualSubscriberIdCollection) use ($subscriberIdCollection) {
                         /** @var SubscriberIdCollection $subscriberIdCollection */
-                        $this->assertInstanceOf(SubscriberIdCollection::class, $subscriberIdCollection);
-                        $this->assertCount(1, $subscriberIdCollection);
-                        $this->assertSame($subscriberId->getValue(), $subscriberIdCollection->current()->getValue());
+                        $this->assertInstanceOf(SubscriberIdCollection::class, $actualSubscriberIdCollection);
+                        $this->assertCount(2, $actualSubscriberIdCollection);
+                        $this->assertSame($subscriberIdCollection->toScalarArray(), $actualSubscriberIdCollection->toScalarArray());
 
                         return true;
                     }
@@ -45,13 +48,15 @@ class SendMessageCommandHandlerTest extends TestCase
             ->expects($this->once())
             ->method('findAllByRole')
             ->willReturn(new SubscriberCollection(
-                [
-                    new Subscriber(
-                        $subscriberId,
-                        $subscriberName
-                    )
-                ]
-            ));
+                $subscriberIdCollection->map(
+                    function(SubscriberId $subscriberId) {
+                        return new Subscriber(
+                            $subscriberId,
+                            $subscriberId->getValue() . 'Name'
+                        );
+                    })
+                )
+            );
 
         $subscriberListCommandHandler = new SubscriberListCommandHandler(
             $subscriberRepository
