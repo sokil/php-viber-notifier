@@ -2,8 +2,11 @@
 
 namespace Sokil\Viber\Notifier\Service\ViberClient;
 
+use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
-use Sokil\Viber\Notifier\Service\ViberClient\Exception\CanNotSetWebHookException;
+use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiRequestError;
+use Sokil\Viber\Notifier\Service\ViberClient\Status\Status;
+use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
 use Sokil\Viber\Notifier\Tools\Http\Client\HttpClientInterface;
 
 /**
@@ -12,6 +15,8 @@ use Sokil\Viber\Notifier\Tools\Http\Client\HttpClientInterface;
 class ViberClient implements ViberClientInterface
 {
     const BASE_URI ='https://chatapi.viber.com';
+
+    const MAX_BROADCAST_RECEIVERS_ALLOWED = 300;
 
     /**
      * @var HttpClientInterface
@@ -36,7 +41,7 @@ class ViberClient implements ViberClientInterface
     /**
      * @param string $url
      *
-     * @throws CanNotSetWebHookException
+     * @throws ViberApiRequestError
      */
     public function setWebHookUrl($url)
     {
@@ -58,7 +63,7 @@ class ViberClient implements ViberClientInterface
                 ]
             );
         } catch (\Exception $e) {
-            throw new CanNotSetWebHookException(
+            throw new ViberApiRequestError(
                 'Error requesting Viber server to set web hook',
                 $e->getCode(),
                 $e
@@ -66,10 +71,10 @@ class ViberClient implements ViberClientInterface
         }
 
         // handle response error
-        if (empty($response['status_message']) || $response['status_message'] !== 'ok') {
-            throw new CanNotSetWebHookException(
+        if (!isset($response['status']) || $response['status'] !== Status::OK) {
+            throw new ViberApiRequestError(
                 sprintf(
-                    'Viber server returns error "%s" while trying to set web hool',
+                    'Viber server returns error "%s" while trying to set web hook',
                     isset($response['status_message']) ? $response['status_message'] : 'none'
                 )
             );
@@ -81,7 +86,7 @@ class ViberClient implements ViberClientInterface
      * @param string $message
      * @param SubscriberIdCollection $subscriberIdCollection
      *
-     * @return bool[]
+     * @return StatusCollection Failed statuses
      */
     public function broadcastMessage(
         $senderName,
@@ -96,32 +101,107 @@ class ViberClient implements ViberClientInterface
             throw new \InvalidArgumentException('Message not specified');
         }
 
-        $wasSent = [];
-
-        foreach ($subscriberIdCollection as $subscriberId) {
-            try {
-                $response = $this->httpClient->request(
-                    self::BASE_URI . '/pa/send_message',
-                    [
-                        'X-Viber-Auth-Token' => $this->authToken,
-                    ],
-                    [
-                        'receiver' => $subscriberId->getValue(),
-                        'type' => 'text',
-                        'sender' => [
-                            'name' => $senderName,
-                        ],
-                        'text' => $message,
-                    ]
-                );
-            } catch (\Exception $e) {
-                $response = null;
-            }
-
-            $wasSent[$subscriberId->getValue()] = !empty($response['status_message'])
-                && $response['status_message'] === 'ok';
+        if (count($subscriberIdCollection) > self::MAX_BROADCAST_RECEIVERS_ALLOWED) {
+            throw new \InvalidArgumentException(sprintf(
+                'Can not send message to more than %s subscribers',
+                self::MAX_BROADCAST_RECEIVERS_ALLOWED
+            ));
         }
 
-        return $wasSent;
+        try {
+            $response = $this->httpClient->request(
+                self::BASE_URI . '/pa/broadcast_message',
+                [
+                    'X-Viber-Auth-Token' => $this->authToken,
+                ],
+                [
+                    'broadcast_list' => $subscriberIdCollection->toScalarArray(),
+                    'type' => 'text',
+                    'sender' => [
+                        'name' => $senderName,
+                    ],
+                    'text' => $message,
+                ]
+            );
+        } catch (\Exception $e) {
+            throw new ViberApiRequestError(
+                'Error requesting Viber server to send broadcast message',
+                $e->getCode(),
+                $e
+            );
+        }
+
+        if (!isset($response['status']) || $response['status'] !== Status::OK) {
+            throw new ViberApiRequestError(
+                sprintf(
+                    'Viber server returns error "%s" while trying to set send broadcast message',
+                    isset($response['status_message']) ? $response['status_message'] : 'none'
+                )
+            );
+        }
+
+        // build collection of failed statuses
+        $statusCollection = [];
+        if (!empty($response['failed_list']) && is_array($response['failed_list'])) {
+            foreach ($response['failed_list'] as $subscriberFailedStatus) {
+                $statusCollection[$subscriberFailedStatus['receiver']] = new Status(
+                    new SubscriberId($subscriberFailedStatus['receiver']),
+                    (int)$subscriberFailedStatus['status'],
+                    $subscriberFailedStatus['status_message']
+                );
+            }
+        }
+
+        return new StatusCollection($statusCollection);
+    }
+
+    /**
+     * @param string $senderName
+     * @param string $message
+     * @param SubscriberId $subscriberId
+     *
+     * @return Status
+     */
+    public function sendMessage(
+        $senderName,
+        $message,
+        SubscriberId $subscriberId
+    ) {
+        if (!is_string($senderName) || empty($senderName)) {
+            throw new \InvalidArgumentException('Sender name not specified');
+        }
+
+        if (!is_string($message) || empty($message)) {
+            throw new \InvalidArgumentException('Message not specified');
+        }
+
+        try {
+            $response = $this->httpClient->request(
+                self::BASE_URI . '/pa/send_message',
+                [
+                    'X-Viber-Auth-Token' => $this->authToken,
+                ],
+                [
+                    'receiver' => $subscriberId->getValue(),
+                    'type' => 'text',
+                    'sender' => [
+                        'name' => $senderName,
+                    ],
+                    'text' => $message,
+                ]
+            );
+        } catch (\Exception $e) {
+            throw new ViberApiRequestError(
+                'Error requesting Viber server to send message',
+                $e->getCode(),
+                $e
+            );
+        }
+
+        return new Status(
+            $subscriberId,
+            (int)$response['status'],
+            $response['status_message']
+        );
     }
 }

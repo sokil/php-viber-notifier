@@ -2,8 +2,11 @@
 
 namespace Sokil\Viber\Notifier\Service\ViberClient;
 
+use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
-use Sokil\Viber\Notifier\Service\ViberClient\Exception\CanNotSetWebHookException;
+use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiRequestError;
+use Sokil\Viber\Notifier\Service\ViberClient\Status\Status;
+use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
 
 /**
  * If you already have convigured Viber bot in your project, just
@@ -17,7 +20,7 @@ interface ViberClientInterface
     /**
      * @param string $url
      *
-     * @throws CanNotSetWebHookException
+     * @throws ViberApiRequestError
      */
     public function setWebHookUrl($url);
 
@@ -26,7 +29,24 @@ interface ViberClientInterface
      * @param string $message
      * @param SubscriberIdCollection $subscriberIdCollection
      *
-     * @return bool[] Key is subscriber id and value is status of send (true - was send, false - not sent)
+     * @return StatusCollection
      */
-    public function broadcastMessage($senderName, $message, SubscriberIdCollection $subscriberIdCollection);
+    public function broadcastMessage(
+        $senderName,
+        $message,
+        SubscriberIdCollection $subscriberIdCollection
+    );
+
+    /**
+     * @param string $senderName
+     * @param string $message
+     * @param SubscriberIdCollection $subscriberIdCollection
+     *
+     * @return Status
+     */
+    public function sendMessage(
+        $senderName,
+        $message,
+        SubscriberId $subscriberId
+    );
 }

@@ -20,4 +20,17 @@ class SubscriberIdCollection extends Collection
             );
         }
     }
+
+    /**
+     * @return array|string[]
+     */
+    public function toScalarArray()
+    {
+        return array_map(
+            function(SubscriberId $subscriberId) {
+                return $subscriberId->getValue();
+            },
+            $this->toArray()
+        );
+    }
 }

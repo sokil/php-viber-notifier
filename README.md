@@ -12,6 +12,18 @@ Allows to implement subscription on Viber's account and broadcast notifications 
 composer require sokil/php-viber-notifier
 ```
 
+## WebHook
+
+Viber informs server about events by webhook. It must be passed to Viber using API.
+
+For Example: 
+
+```
+#!/bin/sh
+
+curl -XPOST -H 'X-Viber-Auth-Token: your-bot-api-token' "https://chatapi.viber.com/pa/set_webhook" -d '{"url": "https://server.com/chatbot/webhook/viber", "event_types": ["subscribed","unsubscribed","conversation_started"], "send_name": true, "send_photo" : true}'
+```
+
 ## Usage
 
 To start sending notifications via Viber we need to [create bot](https://developers.viber.com/docs/api/rest-bot-api/#get-started) first.
