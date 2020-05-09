@@ -41,6 +41,9 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
         }
 
         $subscribersFilter = new SubscriberRepositoryFilter();
+
+        $subscribersFilter->setActive();
+
         if ($command->getRoles() !== null) {
             $subscribersFilter->setRoles($command->getRoles());
         }
