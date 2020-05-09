@@ -5,6 +5,7 @@ namespace Sokil\Viber\Notifier\Command\Subscriber\SubscriberList;
 use Sokil\Viber\Notifier\Command\Subscriber\SubscriberList\Result\Subscriber;
 use Sokil\Viber\Notifier\Command\Subscriber\SubscriberList\Result\SubscriberList;
 use Sokil\Viber\Notifier\Entity\Subscriber as SubscriberEntity;
+use Sokil\Viber\Notifier\Repository\SubscriberRepositoryFilter;
 use Sokil\Viber\Notifier\Repository\SubscribersRepositoryInterface;
 use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
 
@@ -39,8 +40,13 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
             );
         }
 
-        $subscribers = $this->subscriberRepository->findAllByRole(
-            $command->getRole(),
+        $subscribersFilter = new SubscriberRepositoryFilter();
+        if ($command->getRoles() !== null) {
+            $subscribersFilter->setRoles($command->getRoles());
+        }
+
+        $subscribers = $this->subscriberRepository->findAll(
+            $subscribersFilter,
             $command->getLimit(),
             $command->getOffset()
         );

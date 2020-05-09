@@ -2,14 +2,14 @@
 
 namespace Sokil\Viber\Notifier\Command\Subscriber\SubscriberList;
 
-use Sokil\Viber\Notifier\Entity\Role;
+use Sokil\Viber\Notifier\Entity\RoleCollection;
 
 class SubscriberListCommand
 {
     /**
-     * @var Role|null
+     * @var RoleCollection|null
      */
-    private $role;
+    private $roles;
 
     /**
      * @var int
@@ -22,12 +22,15 @@ class SubscriberListCommand
     private $offset;
 
     /**
-     * @param Role|null $role
+     * @param RoleCollection|null $roles
      * @param int $limit
      * @param int $offset
      */
-    public function __construct(Role $role = null, $limit = 100, $offset = 0)
-    {
+    public function __construct(
+        RoleCollection $roles = null,
+        $limit = 100,
+        $offset = 0
+    ) {
         if ($limit < 1) {
             throw new \InvalidArgumentException('Limit must be positive');
         }
@@ -36,18 +39,18 @@ class SubscriberListCommand
             throw new \InvalidArgumentException('Offset must be positive or 0');
         }
 
-        $this->role = $role;
+        $this->roles = $roles;
         $this->limit = $limit;
         $this->offset = $offset;
     }
 
 
     /**
-     * @return Role|null
+     * @return RoleCollection|null
      */
-    public function getRole()
+    public function getRoles()
     {
-        return $this->role;
+        return $this->roles;
     }
 
     /**

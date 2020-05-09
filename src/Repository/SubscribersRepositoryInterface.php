@@ -20,14 +20,14 @@ interface SubscribersRepositoryInterface
     public function unsubscribe(SubscriberId $subscriberId);
 
     /**
-     * @param Role|null $role
+     * @param SubscriberRepositoryFilter $filter
      * @param int $limit
      * @param int $offset
      *
      * @return SubscriberCollection
      */
-    public function findAllByRole(
-        Role $role = null,
+    public function findAll(
+        SubscriberRepositoryFilter $filter,
         $limit,
         $offset
     );

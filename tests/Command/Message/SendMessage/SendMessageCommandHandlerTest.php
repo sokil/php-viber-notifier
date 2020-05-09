@@ -46,7 +46,7 @@ class SendMessageCommandHandlerTest extends TestCase
         $subscriberRepository = $this->getMockBuilder(SubscribersRepositoryInterface::class)->getMock();
         $subscriberRepository
             ->expects($this->once())
-            ->method('findAllByRole')
+            ->method('findAll')
             ->willReturn(new SubscriberCollection(
                 $subscriberIdCollection->map(
                     function(SubscriberId $subscriberId) {
