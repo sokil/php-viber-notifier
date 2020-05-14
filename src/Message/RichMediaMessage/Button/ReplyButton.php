@@ -11,10 +11,4 @@ class ReplyButton extends AbstractButton
     {
         return 'reply';
     }
-
-    public function getActionBody()
-    {
-        // TODO: Implement getActionBody() method.
-    }
-
 }
