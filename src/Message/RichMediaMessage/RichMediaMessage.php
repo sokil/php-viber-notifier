@@ -3,6 +3,7 @@
 namespace Sokil\Viber\Notifier\Message\RichMediaMessage;
 
 use Sokil\Viber\Notifier\Message\AbstractMessage;
+use Sokil\Viber\Notifier\Message\RichMediaMessage\Button\AbstractButton;
 
 /**
  * The Rich Media message type allows sending messages
@@ -10,6 +11,20 @@ use Sokil\Viber\Notifier\Message\AbstractMessage;
  */
 class RichMediaMessage extends AbstractMessage
 {
+    /**
+     * @var AbstractButton[]
+     */
+    private $buttons;
+
+    /**
+     * @param AbstractButton[] $buttons
+     */
+    public function __construct(array $buttons)
+    {
+        $this->buttons = $buttons;
+    }
+
+
     function getMinimalApiVersion()
     {
         return 2;
@@ -26,24 +41,27 @@ class RichMediaMessage extends AbstractMessage
             'rich_media' => [
                 "Type" => "rich_media",
                 "ButtonsGroupColumns" => 6,
-                "ButtonsGroupRows" => 3,
+                "ButtonsGroupRows" => count($this->buttons),
                 "BgColor" => "#FFFFFF",
-                "Buttons" => [
-                    [
-                        'Columns' => 6,
-                        'Rows' => 2,
-                        'Text'=> "Message text",
-                        "ActionType" => "reply",
-                        "ActionBody" => "Key message",
-                    ],
-                    [
-                        'Columns' => 6,
-                        'Rows' => 1,
-                        'Text'=> "Press key",
-                        "ActionType" => "reply",
-                        "ActionBody" => "Key message",
-                    ],
-                ],
+                "Buttons" => array_map(
+                    function(AbstractButton $button) {
+                        $buttonSettings = [
+                            'Columns' => 6,
+                            'Rows' => 2,
+                            'Text'=> $button->getText(),
+                            "ActionType" => $button->getActionType(),
+                            "ActionBody" => $button->getActionBody(),
+                            'TextHAlign' => 'left',
+                        ];
+
+                        if ($button->getBgColor()) {
+                            $buttonSettings['BgColor'] = $button->getBgColor();
+                        }
+
+                        return $buttonSettings;
+                    },
+                    $this->buttons
+                ),
             ],
         ];
     }
