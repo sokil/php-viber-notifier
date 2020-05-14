@@ -5,6 +5,7 @@ namespace Sokil\Viber\Notifier\Service\ViberClient;
 use PHPUnit\Framework\TestCase;
 use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
+use Sokil\Viber\Notifier\Message\TextMessage;
 use Sokil\Viber\Notifier\Tools\Http\Client\HttpClientInterface;
 
 class ViberClientTest extends TestCase
@@ -108,7 +109,7 @@ class ViberClientTest extends TestCase
 
         $statusCollection = $viberClient->broadcastMessage(
             'sender name',
-            'message text',
+            new TextMessage('message text'),
             $subscriberIdCollection
         );
 
@@ -158,7 +159,7 @@ class ViberClientTest extends TestCase
 
         $status = $viberClient->sendMessage(
             'sender name',
-            'message text',
+            new TextMessage('message text'),
             $subscriberId
         );
 

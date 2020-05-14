@@ -4,6 +4,7 @@ namespace Sokil\Viber\Notifier\Service\ViberClient;
 
 use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
+use Sokil\Viber\Notifier\Message\AbstractMessage;
 use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiRequestError;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\Status;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
@@ -26,27 +27,27 @@ interface ViberClientInterface
 
     /**
      * @param string $senderName
-     * @param string $message
+     * @param AbstractMessage $message
      * @param SubscriberIdCollection $subscriberIdCollection
      *
      * @return StatusCollection
      */
     public function broadcastMessage(
         $senderName,
-        $message,
+        AbstractMessage $message,
         SubscriberIdCollection $subscriberIdCollection
     );
 
     /**
      * @param string $senderName
-     * @param string $message
+     * @param AbstractMessage $message
      * @param SubscriberIdCollection $subscriberIdCollection
      *
      * @return Status
      */
     public function sendMessage(
         $senderName,
-        $message,
+        AbstractMessage $message,
         SubscriberId $subscriberId
     );
 }

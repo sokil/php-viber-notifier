@@ -40,7 +40,7 @@ class SendMessageCommandHandler implements CommandHandlerInterface
         if (count($command->getSubscriberIdCollection()) === 1) {
             $status = $this->viberClient->sendMessage(
                 $command->getSenderName(),
-                $command->getText(),
+                $command->getMessage(),
                 $command->getSubscriberIdCollection()->current()
             );
 
@@ -48,7 +48,7 @@ class SendMessageCommandHandler implements CommandHandlerInterface
         } else {
             $statusCollection = $this->viberClient->broadcastMessage(
                 $command->getSenderName(),
-                $command->getText(),
+                $command->getMessage(),
                 $command->getSubscriberIdCollection()
             );
         }

@@ -9,6 +9,7 @@ use Sokil\Viber\Notifier\Entity\Subscriber;
 use Sokil\Viber\Notifier\Entity\SubscriberCollection;
 use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
+use Sokil\Viber\Notifier\Message\TextMessage;
 use Sokil\Viber\Notifier\Repository\SubscribersRepositoryInterface;
 use Sokil\Viber\Notifier\Service\ViberClient\ViberClientInterface;
 
@@ -22,7 +23,7 @@ class SendMessageCommandHandlerTest extends TestCase
         ]);
 
         $senderName = 'Sender name';
-        $message = 'Message text';
+        $message = new TextMessage('Message text');
 
         $viberClient = $this->getMockBuilder(ViberClientInterface::class)->getMock();
         $viberClient
@@ -76,7 +77,7 @@ class SendMessageCommandHandlerTest extends TestCase
 
         $sendMessageCommand = new SendMessageCommand(
             'Sender name',
-            'Message text',
+            $message,
             $subscriberList->getSubscriberIdCollection()
         );
 

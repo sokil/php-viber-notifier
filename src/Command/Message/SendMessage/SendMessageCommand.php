@@ -3,6 +3,7 @@
 namespace Sokil\Viber\Notifier\Command\Message\SendMessage;
 
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
+use Sokil\Viber\Notifier\Message\AbstractMessage;
 
 class SendMessageCommand
 {
@@ -12,9 +13,9 @@ class SendMessageCommand
     private $senderName;
 
     /**
-     * @var string
+     * @var AbstractMessage
      */
-    private $text;
+    private $message;
 
     /**
      * @var SubscriberIdCollection
@@ -23,20 +24,16 @@ class SendMessageCommand
 
     /**
      * @param string $senderName
-     * @param string $text
+     * @param AbstractMessage $text
      * @param SubscriberIdCollection subscriberIdCollection
      */
     public function __construct(
         $senderName,
-        $text,
+        AbstractMessage $text,
         SubscriberIdCollection $subscriberIdCollection
     ) {
         if (empty($senderName) || !is_string($senderName)) {
             throw new \InvalidArgumentException('Sender name not specified');
-        }
-
-        if (empty($text) || !is_string($text)) {
-            throw new \InvalidArgumentException('Text not specified');
         }
 
         if (count($subscriberIdCollection) === 0) {
@@ -44,7 +41,7 @@ class SendMessageCommand
         }
 
         $this->senderName = $senderName;
-        $this->text = $text;
+        $this->message = $text;
         $this->subscriberIdCollection = $subscriberIdCollection;
     }
 
@@ -57,11 +54,11 @@ class SendMessageCommand
     }
 
     /**
-     * @return string
+     * @return AbstractMessage
      */
-    public function getText()
+    public function getMessage()
     {
-        return $this->text;
+        return $this->message;
     }
 
     /**

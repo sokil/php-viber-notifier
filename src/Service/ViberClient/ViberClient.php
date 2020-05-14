@@ -4,6 +4,7 @@ namespace Sokil\Viber\Notifier\Service\ViberClient;
 
 use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
+use Sokil\Viber\Notifier\Message\AbstractMessage;
 use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiRequestError;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\Status;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
@@ -83,22 +84,18 @@ class ViberClient implements ViberClientInterface
 
     /**
      * @param string $senderName
-     * @param string $message
+     * @param AbstractMessage $message
      * @param SubscriberIdCollection $subscriberIdCollection
      *
      * @return StatusCollection Failed statuses
      */
     public function broadcastMessage(
         $senderName,
-        $message,
+        AbstractMessage $message,
         SubscriberIdCollection $subscriberIdCollection
     ) {
         if (!is_string($senderName) || empty($senderName)) {
             throw new \InvalidArgumentException('Sender name not specified');
-        }
-
-        if (!is_string($message) || empty($message)) {
-            throw new \InvalidArgumentException('Message not specified');
         }
 
         if (count($subscriberIdCollection) > self::MAX_BROADCAST_RECEIVERS_ALLOWED) {
@@ -116,12 +113,11 @@ class ViberClient implements ViberClientInterface
                 ],
                 [
                     'broadcast_list' => $subscriberIdCollection->toScalarArray(),
-                    'type' => 'text',
                     'sender' => [
                         'name' => $senderName,
                     ],
-                    'text' => $message,
-                ]
+                    'type' => $message->getType(),
+                ] + $message->toApiRequestParams()
             );
         } catch (\Exception $e) {
             throw new ViberApiRequestError(
@@ -157,22 +153,18 @@ class ViberClient implements ViberClientInterface
 
     /**
      * @param string $senderName
-     * @param string $message
+     * @param AbstractMessage $message
      * @param SubscriberId $subscriberId
      *
      * @return Status
      */
     public function sendMessage(
         $senderName,
-        $message,
+        AbstractMessage $message,
         SubscriberId $subscriberId
     ) {
         if (!is_string($senderName) || empty($senderName)) {
             throw new \InvalidArgumentException('Sender name not specified');
-        }
-
-        if (!is_string($message) || empty($message)) {
-            throw new \InvalidArgumentException('Message not specified');
         }
 
         try {
@@ -183,12 +175,11 @@ class ViberClient implements ViberClientInterface
                 ],
                 [
                     'receiver' => $subscriberId->getValue(),
-                    'type' => 'text',
                     'sender' => [
                         'name' => $senderName,
                     ],
-                    'text' => $message,
-                ]
+                    'type' => $message->getType(),
+                ] + $message->toApiRequestParams()
             );
         } catch (\Exception $e) {
             throw new ViberApiRequestError(
