@@ -24,12 +24,12 @@ class SendMessageCommand
 
     /**
      * @param string $senderName
-     * @param AbstractMessage $text
+     * @param AbstractMessage $message
      * @param SubscriberIdCollection subscriberIdCollection
      */
     public function __construct(
         $senderName,
-        AbstractMessage $text,
+        AbstractMessage $message,
         SubscriberIdCollection $subscriberIdCollection
     ) {
         if (empty($senderName) || !is_string($senderName)) {
@@ -41,7 +41,7 @@ class SendMessageCommand
         }
 
         $this->senderName = $senderName;
-        $this->message = $text;
+        $this->message = $message;
         $this->subscriberIdCollection = $subscriberIdCollection;
     }
 

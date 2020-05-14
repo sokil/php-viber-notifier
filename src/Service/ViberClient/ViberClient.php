@@ -112,6 +112,7 @@ class ViberClient implements ViberClientInterface
                     'X-Viber-Auth-Token' => $this->authToken,
                 ],
                 [
+                    'min_api_version' => $message->getMinimalApiVersion(),
                     'broadcast_list' => $subscriberIdCollection->toScalarArray(),
                     'sender' => [
                         'name' => $senderName,
@@ -174,6 +175,7 @@ class ViberClient implements ViberClientInterface
                     'X-Viber-Auth-Token' => $this->authToken,
                 ],
                 [
+                    'min_api_version' => $message->getMinimalApiVersion(),
                     'receiver' => $subscriberId->getValue(),
                     'sender' => [
                         'name' => $senderName,

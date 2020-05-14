@@ -10,6 +10,11 @@ use Sokil\Viber\Notifier\Message\AbstractMessage;
  */
 class RichMediaMessage extends AbstractMessage
 {
+    function getMinimalApiVersion()
+    {
+        return 2;
+    }
+
     function getType()
     {
         return 'rich_media';
