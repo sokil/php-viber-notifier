@@ -46,9 +46,10 @@ class RichMediaMessage extends AbstractMessage
                 "Buttons" => array_map(
                     function(AbstractButton $button) {
                         $buttonSettings = [
-                            'Columns' => 6,
-                            'Rows' => 2,
+                            'Columns' => $button->getColumns(),
+                            'Rows' => $button->getRows(),
                             'Text'=> $button->getText(),
+                            'Silent' => $button->isSilent(),
                             "ActionType" => $button->getActionType(),
                             "ActionBody" => $button->getActionBody(),
                             'TextHAlign' => 'left',

@@ -26,15 +26,31 @@ abstract class AbstractButton
      * Valid color HEX value
      * @var string|null
      */
-    private $bgColor;
+    private $bgColor = '#FFFFFF';
+
+    /**
+     * @var bool
+     */
+    private $isSilent = false;
+
+    /**
+     * @var int
+     */
+    private $columns = 6;
+
+    /**
+     * @var int
+     */
+    private $rows = 1;
 
     /**
      * @param string|null $text
      * @param string $actionBody
-     * @param string|null $bgColor
      */
-    public function __construct($text, $actionBody, $bgColor = null)
-    {
+    public function __construct(
+        $text,
+        $actionBody
+    ) {
         if (is_string($text)) {
             if (mb_strlen($text) > 250) {
                 throw new \InvalidArgumentException('Text must be null or string with length less then 250 chars');
@@ -45,7 +61,6 @@ abstract class AbstractButton
 
         $this->text = $text;
         $this->actionBody = $actionBody;
-        $this->bgColor = $bgColor;
     }
 
     abstract public function getActionType();
@@ -64,6 +79,70 @@ abstract class AbstractButton
     public function getActionBody()
     {
         return $this->actionBody;
+    }
+
+    /**
+     * @return int
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * @param int $columns
+     */
+    public function setColumns($columns)
+    {
+        if (!is_numeric($columns) || $columns < 1 || $columns > 6) {
+            throw new \InvalidArgumentException('Rows count may be from 1 to 6');
+        }
+
+        $this->columns = $columns;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    /**
+     * @param int $rows
+     */
+    public function setRows($rows)
+    {
+        if (!is_numeric($rows) || $rows < 1 || $rows > 2) {
+            throw new \InvalidArgumentException('Rows count may be 1 or 2');
+        }
+
+        $this->rows = $rows;
+    }
+
+    /**
+     * @param bool $isSilent
+     */
+    public function setSilent($isSilent)
+    {
+        $this->isSilent = $isSilent;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSilent()
+    {
+        return $this->isSilent;
+    }
+
+    /**
+     * @param string $bgColor
+     */
+    public function setBgColor($bgColor)
+    {
+        $this->bgColor = $bgColor;
     }
 
     /**
