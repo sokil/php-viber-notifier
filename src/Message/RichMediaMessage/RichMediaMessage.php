@@ -40,8 +40,8 @@ class RichMediaMessage extends AbstractMessage
         return [
             'rich_media' => [
                 "Type" => "rich_media",
-                "ButtonsGroupColumns" => 6,
-                "ButtonsGroupRows" => count($this->buttons),
+                "ButtonsGroupColumns" => 1,
+                "ButtonsGroupRows" => 1,
                 "BgColor" => "#FFFFFF",
                 "Buttons" => array_map(
                     function(AbstractButton $button) {
