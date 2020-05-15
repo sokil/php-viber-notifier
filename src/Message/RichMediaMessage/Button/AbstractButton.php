@@ -91,6 +91,8 @@ abstract class AbstractButton
 
     /**
      * @param int $columns
+     *
+     * @return self
      */
     public function setColumns($columns)
     {
@@ -99,6 +101,8 @@ abstract class AbstractButton
         }
 
         $this->columns = $columns;
+
+        return $this;
     }
 
     /**
@@ -111,6 +115,8 @@ abstract class AbstractButton
 
     /**
      * @param int $rows
+     *
+     * @return self
      */
     public function setRows($rows)
     {
@@ -119,6 +125,8 @@ abstract class AbstractButton
         }
 
         $this->rows = $rows;
+
+        return $this;
     }
 
     /**
@@ -127,6 +135,8 @@ abstract class AbstractButton
     public function setSilent($isSilent)
     {
         $this->isSilent = $isSilent;
+
+        return $this;
     }
 
     /**
@@ -139,10 +149,14 @@ abstract class AbstractButton
 
     /**
      * @param string $bgColor
+     *
+     * @return self
      */
     public function setBgColor($bgColor)
     {
         $this->bgColor = $bgColor;
+
+        return $this;
     }
 
     /**
