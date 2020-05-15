@@ -41,27 +41,28 @@ class ViberClient implements ViberClientInterface
 
     /**
      * @param string $url
-     *
+     * @param array $eventTypes = null If null, subscribe to all events. Possible values (message, delivered, seen, failed, subscribed, unsubscribed, conversation_started)
      * @throws ViberApiRequestError
      */
-    public function setWebHookUrl($url)
+    public function setWebHookUrl($url, array $eventTypes = null)
     {
         try {
+            $query = [
+                "url" => (string)$url,
+                "send_name" => true,
+                "send_photo" => true,
+            ];
+
+            if (is_array($eventTypes)) {
+                $query['event_types'] = $eventTypes;
+            }
+
             $response = $this->httpClient->request(
                 self::BASE_URI . '/pa/set_webhook',
                 [
                     'X-Viber-Auth-Token' => $this->authToken,
                 ],
-                [
-                    "url" => (string)$url,
-                    "event_types" => [
-                        "subscribed",
-                        "unsubscribed",
-                        "conversation_started",
-                    ],
-                    "send_name" => true,
-                    "send_photo" => true,
-                ]
+                $query
             );
         } catch (\Exception $e) {
             throw new ViberApiRequestError(

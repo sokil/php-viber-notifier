@@ -20,10 +20,11 @@ interface ViberClientInterface
 {
     /**
      * @param string $url
+     * @param array|null $eventTypes If null, subscribe to all events. Possible values (message, delivered, seen, failed, subscribed, unsubscribed, conversation_started)
      *
      * @throws ViberApiRequestError
      */
-    public function setWebHookUrl($url);
+    public function setWebHookUrl($url, array $eventTypes = null);
 
     /**
      * @param string $senderName

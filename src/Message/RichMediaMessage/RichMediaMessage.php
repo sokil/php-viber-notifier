@@ -33,7 +33,7 @@ class RichMediaMessage extends AbstractMessage
     {
         $this->buttons = $buttons;
     }
-    
+
     function getMinimalApiVersion()
     {
         return 2;
