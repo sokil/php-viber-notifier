@@ -17,14 +17,23 @@ class RichMediaMessage extends AbstractMessage
     private $buttons;
 
     /**
+     * @var int
+     */
+    private $buttonsGroupColumns = 6;
+
+    /**
+     * @var int
+     */
+    private $buttonsGroupRows = 7;
+
+    /**
      * @param AbstractButton[] $buttons
      */
     public function __construct(array $buttons)
     {
         $this->buttons = $buttons;
     }
-
-
+    
     function getMinimalApiVersion()
     {
         return 2;
@@ -35,13 +44,37 @@ class RichMediaMessage extends AbstractMessage
         return 'rich_media';
     }
 
+    /**
+     * @param int $buttonsGroupColumns
+     *
+     * @return self
+     */
+    public function setButtonsGroupColumns($buttonsGroupColumns)
+    {
+        $this->buttonsGroupColumns = $buttonsGroupColumns;
+
+        return $this;
+    }
+
+    /**
+     * @param int $buttonsGroupRows
+     *
+     * @return self
+     */
+    public function setButtonsGroupRows($buttonsGroupRows)
+    {
+        $this->buttonsGroupRows = $buttonsGroupRows;
+
+        return $this;
+    }
+
     function toApiRequestParams()
     {
         return [
             'rich_media' => [
                 "Type" => "rich_media",
-                "ButtonsGroupColumns" => 1,
-                "ButtonsGroupRows" => 1,
+                "ButtonsGroupColumns" => $this->buttonsGroupColumns,
+                "ButtonsGroupRows" => $this->buttonsGroupRows,
                 "BgColor" => "#FFFFFF",
                 "Buttons" => array_map(
                     function(AbstractButton $button) {
