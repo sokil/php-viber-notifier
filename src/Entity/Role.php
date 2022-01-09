@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Entity;
 
 class Role
@@ -10,9 +12,8 @@ class Role
     private $name;
 
     /**
-     * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -20,7 +21,7 @@ class Role
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

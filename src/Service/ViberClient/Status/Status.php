@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Service\ViberClient\Status;
 
 use Sokil\Viber\Notifier\Entity\SubscriberId;
@@ -44,11 +46,8 @@ class Status
     private $statusMessage;
 
     /**
-     * @param SubscriberId $subscriberId
-     * @param int $status
-     * @param string $statusMessage
      */
-    public function __construct(SubscriberId $subscriberId, $status, $statusMessage)
+    public function __construct(SubscriberId $subscriberId, int $status, string $statusMessage)
     {
         if (!is_int($status)) {
             throw new \InvalidArgumentException('Status must be int');

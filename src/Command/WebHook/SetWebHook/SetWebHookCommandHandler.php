@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\WebHook\SetWebHook;
 
 use Sokil\Viber\Notifier\Command\WebHook\HandleWebHook\HandleWebHookCommand;
@@ -14,7 +16,6 @@ class SetWebHookCommandHandler implements CommandHandlerInterface
     private $viberClient;
 
     /**
-     * @param ViberClientInterface $viberClient
      */
     public function __construct(ViberClientInterface $viberClient)
     {
@@ -22,9 +23,8 @@ class SetWebHookCommandHandler implements CommandHandlerInterface
     }
 
     /**
-     * @param HandleWebHookCommand $command
      */
-    public function handle($command)
+    public function handle(HandleWebHookCommand $command)
     {
         if (!$command instanceof SetWebHookCommand) {
             throw new \InvalidArgumentException(

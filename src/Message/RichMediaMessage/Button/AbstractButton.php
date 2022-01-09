@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Message\RichMediaMessage\Button;
 
 /**
@@ -8,7 +10,7 @@ namespace Sokil\Viber\Notifier\Message\RichMediaMessage\Button;
 abstract class AbstractButton
 {
     /**
-     * 	Text to be displayed on the button. Can contain some HTML tags.
+     *  Text to be displayed on the button. Can contain some HTML tags.
      * Valid and allowed HTML tags Max 250 characters.
      * If the text is too long to display on the button it will be cropped and ended with “…”
      *
@@ -44,12 +46,10 @@ abstract class AbstractButton
     private $rows = 1;
 
     /**
-     * @param string|null $text
-     * @param string $actionBody
      */
     public function __construct(
-        $text,
-        $actionBody
+        ?string $text,
+        string $actionBody
     ) {
         if (is_string($text)) {
             if (mb_strlen($text) > 250) {
@@ -90,11 +90,10 @@ abstract class AbstractButton
     }
 
     /**
-     * @param int $columns
      *
      * @return self
      */
-    public function setColumns($columns)
+    public function setColumns(int $columns)
     {
         if (!is_numeric($columns) || $columns < 1 || $columns > 6) {
             throw new \InvalidArgumentException('Rows count may be from 1 to 6');
@@ -114,11 +113,10 @@ abstract class AbstractButton
     }
 
     /**
-     * @param int $rows
      *
      * @return self
      */
-    public function setRows($rows)
+    public function setRows(int $rows)
     {
         if (!is_numeric($rows) || $rows < 1 || $rows > 2) {
             throw new \InvalidArgumentException('Rows count may be 1 or 2');
@@ -130,9 +128,8 @@ abstract class AbstractButton
     }
 
     /**
-     * @param bool $isSilent
      */
-    public function setSilent($isSilent)
+    public function setSilent(bool $isSilent)
     {
         $this->isSilent = $isSilent;
 
@@ -148,11 +145,10 @@ abstract class AbstractButton
     }
 
     /**
-     * @param string $bgColor
      *
      * @return self
      */
-    public function setBgColor($bgColor)
+    public function setBgColor(string $bgColor)
     {
         $this->bgColor = $bgColor;
 

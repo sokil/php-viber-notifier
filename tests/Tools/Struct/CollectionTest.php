@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Tools\Structs;
 
 use PHPUnit\Framework\TestCase;

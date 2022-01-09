@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Repository;
 
 use Sokil\Viber\Notifier\Entity\Role;
@@ -9,10 +11,8 @@ use Sokil\Viber\Notifier\Entity\SubscriberId;
 interface SubscribersRepositoryInterface
 {
     /**
-     * @param SubscriberId $subscriberId
-     * @param string $subscriberName
      */
-    public function subscribe(SubscriberId $subscriberId, $subscriberName);
+    public function subscribe(SubscriberId $subscriberId, string $subscriberName);
 
     /**
      * @param string $subscriberId
@@ -20,15 +20,12 @@ interface SubscribersRepositoryInterface
     public function unsubscribe(SubscriberId $subscriberId);
 
     /**
-     * @param SubscriberRepositoryFilter $filter
-     * @param int $limit
-     * @param int $offset
      *
      * @return SubscriberCollection
      */
     public function findAll(
         SubscriberRepositoryFilter $filter,
-        $limit,
-        $offset
+        int $limit,
+        int $offset
     );
 }

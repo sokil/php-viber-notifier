@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\WebHook\HandleWebHook;
 
 use Sokil\Viber\Notifier\Entity\SubscriberId;
@@ -22,7 +24,6 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
     private $eventDispatcher;
 
     /**
-     * @param SubscribersRepositoryInterface $subscriberRepository
      */
     public function __construct(
         SubscribersRepositoryInterface $subscriberRepository,
@@ -33,9 +34,8 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
     }
 
     /**
-     * @param HandleWebHookCommand $command
      */
-    public function handle($command)
+    public function handle(HandleWebHookCommand $command)
     {
         if (!$command instanceof HandleWebHookCommand) {
             throw new \InvalidArgumentException(
@@ -86,4 +86,3 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
         }
     }
 }
-

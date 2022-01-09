@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Message;
 
 class TextMessage extends AbstractMessage
@@ -10,9 +12,8 @@ class TextMessage extends AbstractMessage
     private $text;
 
     /**
-     * @param string $test
      */
-    public function __construct($test)
+    public function __construct(string $test)
     {
         if (!is_string($test) || empty($test)) {
             throw new \InvalidArgumentException('Message not specified');
@@ -46,6 +47,4 @@ class TextMessage extends AbstractMessage
             'text' => $this->text,
         ];
     }
-
-
 }

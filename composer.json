@@ -22,12 +22,14 @@
     }
   },
   "require": {
-    "php": ">=5.5",
+    "php": ">=7.3",
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": ">=4.8.35",
-    "php-coveralls/php-coveralls": "^2.2.0"
+    "phpunit/phpunit": "^9.5",
+    "php-coveralls/php-coveralls": "^2.2.0",
+    "squizlabs/php_codesniffer": "^3.6",
+    "slevomat/coding-standard": "^7.0"
   },
   "suggest": {
     "fig/http-message-util": "For supporting of PSR HTTP Clients",
@@ -39,6 +41,8 @@
   "scripts": {
     "test": "./vendor/bin/phpunit",
     "cover": "./vendor/bin/phpunit --coverage-clover ./build/phpunit/clover.xml",
-    "coveralls": "./vendor/bin/php-coveralls -v"
+    "coveralls": "./vendor/bin/php-coveralls -v",
+    "check-style": "./vendor/bin/phpcs",
+    "fix-style": "./vendor/bin/phpcbf"
   }
 }

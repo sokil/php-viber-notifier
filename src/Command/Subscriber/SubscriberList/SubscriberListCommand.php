@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\Subscriber\SubscriberList;
 
 use Sokil\Viber\Notifier\Entity\RoleCollection;
@@ -23,13 +25,11 @@ class SubscriberListCommand
 
     /**
      * @param RoleCollection|null $roles
-     * @param int $limit
-     * @param int $offset
      */
     public function __construct(
         RoleCollection $roles = null,
-        $limit = 100,
-        $offset = 0
+        int $limit = 100,
+        int $offset = 0
     ) {
         if ($limit < 1) {
             throw new \InvalidArgumentException('Limit must be positive');

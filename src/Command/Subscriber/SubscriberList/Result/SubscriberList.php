@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\Subscriber\SubscriberList\Result;
 
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
@@ -26,7 +28,7 @@ class SubscriberList extends Collection
     {
         return new SubscriberIdCollection(
             $this->reduce(
-                function(array $carry, Subscriber $subscriber) {
+                function (array $carry, Subscriber $subscriber) {
                     $carry[] = $subscriber->getId();
                     return $carry;
                 }

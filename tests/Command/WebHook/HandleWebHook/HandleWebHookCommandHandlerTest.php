@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\WebHook\HandleWebHook;
 
 use PHPUnit\Framework\TestCase;
@@ -60,11 +62,9 @@ class HandleWebHookCommandHandlerTest extends TestCase
     /**
      * @dataProvider subscribeDataProvider
      *
-     * @param string $viberUserId
-     * @param string $viberUserName
      * @param array $event
      */
-    public function testSubscribe($viberUserId, $viberUserName, array $event)
+    public function testSubscribe(string $viberUserId, string $viberUserName, array $event)
     {
         $command = new HandleWebHookCommand(
             $event
@@ -75,7 +75,7 @@ class HandleWebHookCommandHandlerTest extends TestCase
             ->expects($this->once())
             ->method('subscribe')
             ->with(
-                $this->callback(function($subscriberId) use ($viberUserId) {
+                $this->callback(function ($subscriberId) use ($viberUserId) {
                     /** @var SubscriberId $subscriberId */
                     $this->assertInstanceOf(SubscriberId::class, $subscriberId);
                     $this->assertSame($viberUserId, $subscriberId->getValue());
@@ -108,7 +108,7 @@ class HandleWebHookCommandHandlerTest extends TestCase
             ->expects($this->once())
             ->method('unsubscribe')
             ->with(
-                $this->callback(function($subscriberId) use ($viberUserId) {
+                $this->callback(function ($subscriberId) use ($viberUserId) {
                     /** @var SubscriberId $subscriberId */
                     $this->assertInstanceOf(SubscriberId::class, $subscriberId);
                     $this->assertSame($viberUserId, $subscriberId->getValue());

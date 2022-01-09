@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\Message\SendMessage;
 
 use Sokil\Viber\Notifier\Command\CommandHandlerInterface;
@@ -14,7 +16,6 @@ class SendMessageCommandHandler implements CommandHandlerInterface
     private $viberClient;
 
     /**
-     * @param ViberClientInterface $viberClient
      */
     public function __construct(ViberClientInterface $viberClient)
     {
@@ -22,11 +23,10 @@ class SendMessageCommandHandler implements CommandHandlerInterface
     }
 
     /**
-     * @param SendMessageCommand $command
      *
      * @return StatusCollection
      */
-    public function handle($command)
+    public function handle(SendMessageCommand $command)
     {
         if (!$command instanceof SendMessageCommand) {
             throw new \InvalidArgumentException(
@@ -57,6 +57,3 @@ class SendMessageCommandHandler implements CommandHandlerInterface
         return $statusCollection;
     }
 }
-
-
-

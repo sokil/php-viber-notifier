@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Tools\Structs;
 
 abstract class Collection implements \Iterator, \Countable
@@ -24,13 +26,12 @@ abstract class Collection implements \Iterator, \Countable
     /**
      * Validate element
      *
-     * @param mixed $element
      *
      * @return void
      *
      * @throws \InvalidArgumentException
      */
-    abstract protected function assert($element);
+    abstract protected function assert(mixed $element);
 
     /**
      * Return the current element
@@ -103,11 +104,10 @@ abstract class Collection implements \Iterator, \Countable
     }
 
     /**
-     * @param int $index
      *
      * @return mixed
      */
-    public function get($index)
+    public function get(int $index)
     {
         if (!is_integer($index)) {
             throw new \InvalidArgumentException('Index must be positive integer');
@@ -121,7 +121,6 @@ abstract class Collection implements \Iterator, \Countable
     }
 
     /**
-     * @param callable $filter
      *
      * @return Collection
      */
@@ -131,7 +130,6 @@ abstract class Collection implements \Iterator, \Countable
     }
 
     /**
-     * @param callable $mapper
      *
      * @return array
      */
@@ -141,18 +139,15 @@ abstract class Collection implements \Iterator, \Countable
     }
 
     /**
-     * @param callable $reducer
-     * @param mixed $initialCarry
      *
      * @return mixed
      */
-    public function reduce(callable $reducer, $initialCarry = [])
+    public function reduce(callable $reducer, mixed $initialCarry = [])
     {
         return array_reduce($this->collection, $reducer, $initialCarry);
     }
 
     /**
-     * @param callable $sortingFunction
      *
      * @return Collection
      *

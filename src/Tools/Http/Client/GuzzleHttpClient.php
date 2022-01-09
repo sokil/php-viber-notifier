@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Tools\Http\Client;
 
 use GuzzleHttp\Client;
@@ -12,7 +14,6 @@ class GuzzleHttpClient implements HttpClientInterface
     private $httpClient;
 
     /**
-     * @param Client $httpClient
      */
     public function __construct(
         Client $httpClient
@@ -21,13 +22,12 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param string $uri
      * @param array $headers
      * @param array $body
      *
      * @return array
      */
-    public function request($uri, array $headers, array $body)
+    public function request(string $uri, array $headers, array $body)
     {
         $response = $this->httpClient->post(
             $uri,

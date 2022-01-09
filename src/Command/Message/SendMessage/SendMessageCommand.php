@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\Message\SendMessage;
 
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
@@ -23,12 +25,10 @@ class SendMessageCommand
     private $subscriberIdCollection;
 
     /**
-     * @param string $senderName
-     * @param AbstractMessage $message
      * @param SubscriberIdCollection subscriberIdCollection
      */
     public function __construct(
-        $senderName,
+        string $senderName,
         AbstractMessage $message,
         SubscriberIdCollection $subscriberIdCollection
     ) {

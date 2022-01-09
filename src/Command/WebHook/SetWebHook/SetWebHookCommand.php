@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\WebHook\SetWebHook;
 
 class SetWebHookCommand
@@ -10,9 +12,8 @@ class SetWebHookCommand
     private $url;
 
     /**
-     * @param string $url
      */
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $this->url = $url;
     }

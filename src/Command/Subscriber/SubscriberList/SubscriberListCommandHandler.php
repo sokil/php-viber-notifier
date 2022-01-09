@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\Subscriber\SubscriberList;
 
 use Sokil\Viber\Notifier\Command\Subscriber\SubscriberList\Result\Subscriber;
@@ -17,7 +19,6 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
     private $subscriberRepository;
 
     /**
-     * @param SubscribersRepositoryInterface $subscriberRepository
      */
     public function __construct(SubscribersRepositoryInterface $subscriberRepository)
     {
@@ -25,11 +26,10 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
     }
 
     /**
-     * @param SubscriberListCommand $command
      *
      * @return SubscriberList
      */
-    public function handle($command)
+    public function handle(SubscriberListCommand $command)
     {
         if (!$command instanceof SubscriberListCommand) {
             throw new \InvalidArgumentException(
@@ -56,7 +56,7 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
 
         return new SubscriberList(
             $subscribers->map(
-                function(SubscriberEntity $subscriber) {
+                function (SubscriberEntity $subscriber) {
                     return new Subscriber(
                         $subscriber->getId(),
                         $subscriber->getName()

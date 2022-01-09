@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Service\ViberClient;
 
 use Sokil\Viber\Notifier\Entity\SubscriberId;
@@ -15,7 +17,7 @@ use Sokil\Viber\Notifier\Tools\Http\Client\HttpClientInterface;
  */
 class ViberClient implements ViberClientInterface
 {
-    const BASE_URI ='https://chatapi.viber.com';
+    const BASE_URI = 'https://chatapi.viber.com';
 
     const MAX_BROADCAST_RECEIVERS_ALLOWED = 300;
 
@@ -30,21 +32,18 @@ class ViberClient implements ViberClientInterface
     private $authToken;
 
     /**
-     * @param HttpClientInterface $httpClient
-     * @param string $authToken
      */
-    public function __construct(HttpClientInterface $httpClient, $authToken)
+    public function __construct(HttpClientInterface $httpClient, string $authToken)
     {
         $this->httpClient = $httpClient;
         $this->authToken = $authToken;
     }
 
     /**
-     * @param string $url
      * @param array $eventTypes = null If null, subscribe to all events. Possible values (message, delivered, seen, failed, subscribed, unsubscribed, conversation_started)
      * @throws ViberApiRequestError
      */
-    public function setWebHookUrl($url, array $eventTypes = null)
+    public function setWebHookUrl(string $url, array $eventTypes = null)
     {
         try {
             $query = [
@@ -84,14 +83,11 @@ class ViberClient implements ViberClientInterface
     }
 
     /**
-     * @param string $senderName
-     * @param AbstractMessage $message
-     * @param SubscriberIdCollection $subscriberIdCollection
      *
      * @return StatusCollection Failed statuses
      */
     public function broadcastMessage(
-        $senderName,
+        string $senderName,
         AbstractMessage $message,
         SubscriberIdCollection $subscriberIdCollection
     ) {
@@ -154,14 +150,11 @@ class ViberClient implements ViberClientInterface
     }
 
     /**
-     * @param string $senderName
-     * @param AbstractMessage $message
-     * @param SubscriberId $subscriberId
      *
      * @return Status
      */
     public function sendMessage(
-        $senderName,
+        string $senderName,
         AbstractMessage $message,
         SubscriberId $subscriberId
     ) {

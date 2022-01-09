@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Tools\Http\Client;
 
 use Fig\Http\Message\RequestMethodInterface;
@@ -25,9 +27,6 @@ class PsrHttpClient implements HttpClientInterface
     private $httpStreamFactoryInterface;
 
     /**
-     * @param ClientInterface $httpClient
-     * @param RequestFactoryInterface $httpRequestFactory
-     * @param StreamFactoryInterface $httpStreamFactoryInterface
      */
     public function __construct(
         ClientInterface $httpClient,
@@ -39,13 +38,12 @@ class PsrHttpClient implements HttpClientInterface
         $this->httpStreamFactoryInterface = $httpStreamFactoryInterface;
     }
     /**
-     * @param string $uri
      * @param array $headers
      * @param array $body
      *
      * @return array
      */
-    public function request($uri, array $headers, array $body)
+    public function request(string $uri, array $headers, array $body)
     {
         $requestBody = $this->httpStreamFactoryInterface->createStream(
             \json_encode($body)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Entity;
 
 use Sokil\Viber\Notifier\Tools\Structs\Collection;
@@ -27,7 +29,7 @@ class SubscriberIdCollection extends Collection
     public function toScalarArray()
     {
         return array_map(
-            function(SubscriberId $subscriberId) {
+            function (SubscriberId $subscriberId) {
                 return $subscriberId->getValue();
             },
             $this->toArray()

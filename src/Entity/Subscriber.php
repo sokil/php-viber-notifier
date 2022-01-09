@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Entity;
 
 class Subscriber
@@ -15,12 +17,10 @@ class Subscriber
     private $name;
 
     /**
-     * @param SubscriberId $id
-     * @param string $name
      */
     public function __construct(
         SubscriberId $id,
-        $name
+        string $name
     ) {
         $this->id = $id;
         $this->name = $name;

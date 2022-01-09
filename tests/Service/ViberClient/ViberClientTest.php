@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Service\ViberClient;
 
 use PHPUnit\Framework\TestCase;
@@ -21,13 +23,13 @@ class ViberClientTest extends TestCase
             ->method('request')
             ->with(
                 'https://chatapi.viber.com/pa/set_webhook',
-                $this->callback(function(array $headers) use($authToken) {
+                $this->callback(function (array $headers) use ($authToken) {
                     $this->assertArrayHasKey('X-Viber-Auth-Token', $headers);
                     $this->assertSame($authToken, $headers['X-Viber-Auth-Token']);
 
                     return true;
                 }),
-                $this->callback(function(array $body) use($webHookUrl) {
+                $this->callback(function (array $body) use ($webHookUrl) {
                     $this->assertArrayHasKey('url', $body);
                     $this->assertSame($webHookUrl, $body['url']);
 
@@ -75,13 +77,13 @@ class ViberClientTest extends TestCase
             ->method('request')
             ->with(
                 'https://chatapi.viber.com/pa/broadcast_message',
-                $this->callback(function(array $headers) use($authToken) {
+                $this->callback(function (array $headers) use ($authToken) {
                     $this->assertArrayHasKey('X-Viber-Auth-Token', $headers);
                     $this->assertSame($authToken, $headers['X-Viber-Auth-Token']);
 
                     return true;
                 }),
-                $this->callback(function(array $body) use($subscriberIdCollection) {
+                $this->callback(function (array $body) use ($subscriberIdCollection) {
                     $this->assertArrayHasKey('broadcast_list', $body);
                     $this->assertSame($subscriberIdCollection->toScalarArray(), $body['broadcast_list']);
 
@@ -132,13 +134,13 @@ class ViberClientTest extends TestCase
             ->method('request')
             ->with(
                 'https://chatapi.viber.com/pa/send_message',
-                $this->callback(function(array $headers) use($authToken) {
+                $this->callback(function (array $headers) use ($authToken) {
                     $this->assertArrayHasKey('X-Viber-Auth-Token', $headers);
                     $this->assertSame($authToken, $headers['X-Viber-Auth-Token']);
 
                     return true;
                 }),
-                $this->callback(function(array $body) use($subscriberId) {
+                $this->callback(function (array $body) use ($subscriberId) {
                     $this->assertArrayHasKey('receiver', $body);
                     $this->assertSame($subscriberId->getValue(), $body['receiver']);
 

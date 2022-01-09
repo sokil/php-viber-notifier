@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Service\ViberClient;
 
 use Sokil\Viber\Notifier\Entity\SubscriberId;
@@ -19,35 +21,29 @@ use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
 interface ViberClientInterface
 {
     /**
-     * @param string $url
      * @param array|null $eventTypes If null, subscribe to all events. Possible values (message, delivered, seen, failed, subscribed, unsubscribed, conversation_started)
      *
      * @throws ViberApiRequestError
      */
-    public function setWebHookUrl($url, array $eventTypes = null);
+    public function setWebHookUrl(string $url, array $eventTypes = null);
 
     /**
-     * @param string $senderName
-     * @param AbstractMessage $message
-     * @param SubscriberIdCollection $subscriberIdCollection
      *
      * @return StatusCollection
      */
     public function broadcastMessage(
-        $senderName,
+        string $senderName,
         AbstractMessage $message,
         SubscriberIdCollection $subscriberIdCollection
     );
 
     /**
-     * @param string $senderName
-     * @param AbstractMessage $message
      * @param SubscriberIdCollection $subscriberIdCollection
      *
      * @return Status
      */
     public function sendMessage(
-        $senderName,
+        string $senderName,
         AbstractMessage $message,
         SubscriberId $subscriberId
     );

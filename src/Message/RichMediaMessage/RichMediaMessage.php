@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Message\RichMediaMessage;
 
 use Sokil\Viber\Notifier\Message\AbstractMessage;
@@ -45,11 +47,10 @@ class RichMediaMessage extends AbstractMessage
     }
 
     /**
-     * @param int $buttonsGroupColumns
      *
      * @return self
      */
-    public function setButtonsGroupColumns($buttonsGroupColumns)
+    public function setButtonsGroupColumns(int $buttonsGroupColumns)
     {
         $this->buttonsGroupColumns = $buttonsGroupColumns;
 
@@ -57,11 +58,10 @@ class RichMediaMessage extends AbstractMessage
     }
 
     /**
-     * @param int $buttonsGroupRows
      *
      * @return self
      */
-    public function setButtonsGroupRows($buttonsGroupRows)
+    public function setButtonsGroupRows(int $buttonsGroupRows)
     {
         $this->buttonsGroupRows = $buttonsGroupRows;
 
@@ -77,11 +77,11 @@ class RichMediaMessage extends AbstractMessage
                 "ButtonsGroupRows" => $this->buttonsGroupRows,
                 "BgColor" => "#FFFFFF",
                 "Buttons" => array_map(
-                    function(AbstractButton $button) {
+                    function (AbstractButton $button) {
                         $buttonSettings = [
                             'Columns' => $button->getColumns(),
                             'Rows' => $button->getRows(),
-                            'Text'=> $button->getText(),
+                            'Text' => $button->getText(),
                             'Silent' => $button->isSilent(),
                             "ActionType" => $button->getActionType(),
                             "ActionBody" => $button->getActionBody(),
@@ -99,5 +99,4 @@ class RichMediaMessage extends AbstractMessage
             ],
         ];
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Repository;
 
 use Sokil\Viber\Notifier\Entity\RoleCollection;
@@ -17,7 +19,6 @@ class SubscriberRepositoryFilter
     private $active;
 
     /**
-     * @param RoleCollection $roles
      *
      * @return self
      */

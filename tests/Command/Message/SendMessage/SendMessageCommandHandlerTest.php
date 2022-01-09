@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sokil\Viber\Notifier\Command\Message\SendMessage;
 
 use PHPUnit\Framework\TestCase;
@@ -33,7 +35,7 @@ class SendMessageCommandHandlerTest extends TestCase
                 $senderName,
                 $message,
                 $this->callback(
-                    function($actualSubscriberIdCollection) use ($subscriberIdCollection) {
+                    function ($actualSubscriberIdCollection) use ($subscriberIdCollection) {
                         /** @var SubscriberIdCollection $subscriberIdCollection */
                         $this->assertInstanceOf(SubscriberIdCollection::class, $actualSubscriberIdCollection);
                         $this->assertCount(2, $actualSubscriberIdCollection);
@@ -50,14 +52,14 @@ class SendMessageCommandHandlerTest extends TestCase
             ->method('findAll')
             ->willReturn(new SubscriberCollection(
                 $subscriberIdCollection->map(
-                    function(SubscriberId $subscriberId) {
+                    function (SubscriberId $subscriberId) {
                         return new Subscriber(
                             $subscriberId,
                             $subscriberId->getValue() . 'Name'
                         );
-                    })
+                    }
                 )
-            );
+            ));
 
         $subscriberListCommandHandler = new SubscriberListCommandHandler(
             $subscriberRepository
