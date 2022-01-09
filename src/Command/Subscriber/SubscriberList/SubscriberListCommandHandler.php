@@ -29,7 +29,7 @@ class SubscriberListCommandHandler implements CommandHandlerInterface
      *
      * @return SubscriberList
      */
-    public function handle(SubscriberListCommand $command)
+    public function handle($command)
     {
         if (!$command instanceof SubscriberListCommand) {
             throw new \InvalidArgumentException(

@@ -24,7 +24,7 @@ class SetWebHookCommandHandler implements CommandHandlerInterface
 
     /**
      */
-    public function handle(HandleWebHookCommand $command)
+    public function handle($command)
     {
         if (!$command instanceof SetWebHookCommand) {
             throw new \InvalidArgumentException(

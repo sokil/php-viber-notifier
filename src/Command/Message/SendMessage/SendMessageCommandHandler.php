@@ -26,7 +26,7 @@ class SendMessageCommandHandler implements CommandHandlerInterface
      *
      * @return StatusCollection
      */
-    public function handle(SendMessageCommand $command)
+    public function handle($command)
     {
         if (!$command instanceof SendMessageCommand) {
             throw new \InvalidArgumentException(

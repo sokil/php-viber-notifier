@@ -35,7 +35,7 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
 
     /**
      */
-    public function handle(HandleWebHookCommand $command)
+    public function handle($command)
     {
         if (!$command instanceof HandleWebHookCommand) {
             throw new \InvalidArgumentException(
