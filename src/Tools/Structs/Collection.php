@@ -31,7 +31,7 @@ abstract class Collection implements \Iterator, \Countable
      *
      * @throws \InvalidArgumentException
      */
-    abstract protected function assert(mixed $element);
+    abstract protected function assert($element);
 
     /**
      * Return the current element
@@ -142,7 +142,7 @@ abstract class Collection implements \Iterator, \Countable
      *
      * @return mixed
      */
-    public function reduce(callable $reducer, mixed $initialCarry = [])
+    public function reduce(callable $reducer, $initialCarry = [])
     {
         return array_reduce($this->collection, $reducer, $initialCarry);
     }
