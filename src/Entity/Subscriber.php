@@ -9,12 +9,12 @@ class Subscriber
     /**
      * @var SubscriberId
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      */

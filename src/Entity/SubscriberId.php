@@ -11,22 +11,16 @@ class SubscriberId
      */
     private $value;
 
-    /**
-     */
     public function __construct(string $value)
     {
         if (strlen($value) !== 24) {
-            throw new \InvalidArgumentException('Viber suvscriber id must me 24 chars long');
+            throw new \InvalidArgumentException('Viber subscriber id must me 24 chars long');
         }
 
-        
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
