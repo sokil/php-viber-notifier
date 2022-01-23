@@ -12,7 +12,7 @@ class HandleWebHookCommandHandlerTest extends TestCase
 {
     public function subscribeDataProvider()
     {
-        $viberUserId = 'xxxffff==';
+        $viberUserId = base64_encode(hex2bin('d5241619e59440b447c2721c360fb648'));
         $viberUserName = 'User name';
 
         return [
@@ -94,7 +94,7 @@ class HandleWebHookCommandHandlerTest extends TestCase
 
     public function testUnsubscribe()
     {
-        $viberUserId = 'xxxffff==';
+        $viberUserId = base64_encode(hex2bin('d5241619e59440b447c2721c360fb648'));
 
         $command = new HandleWebHookCommand(
             [

@@ -20,8 +20,8 @@ class SendMessageCommandHandlerTest extends TestCase
     public function testBroadcast()
     {
         $subscriberIdCollection = new SubscriberIdCollection([
-            new SubscriberId('==aaa=='),
-            new SubscriberId('==bbb==')
+            new SubscriberId(base64_encode(hex2bin('5e0025cb55baef890b46995b12195807'))),
+            new SubscriberId(base64_encode(hex2bin('0c9df24193126bf29fed71691f722cdb'))),
         ]);
 
         $senderName = 'Sender name';

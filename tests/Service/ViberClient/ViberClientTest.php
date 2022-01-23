@@ -67,8 +67,8 @@ class ViberClientTest extends TestCase
     {
         $authToken = 'AuthToken';
         $subscriberIdCollection = new SubscriberIdCollection([
-            new SubscriberId('===aaa==='),
-            new SubscriberId('===bbb==='),
+            new SubscriberId(base64_encode(hex2bin('355be750e9aee9125def9effef5d9426'))),
+            new SubscriberId(base64_encode(hex2bin('d33d1e9f91b4f41f57ab2110be4ac487'))),
         ]);
 
         $httpClient = $this->getMockBuilder(HttpClientInterface::class)->getMock();
@@ -96,7 +96,7 @@ class ViberClientTest extends TestCase
                     "status_message" => "ok",
                     "failed_list" => [
                         [
-                            "receiver" => "===bbb===",
+                            "receiver" => base64_encode(hex2bin('d33d1e9f91b4f41f57ab2110be4ac487')),
                             "status" => 6,
                             "status_message" => "Not subscribed"
                         ]
@@ -118,7 +118,10 @@ class ViberClientTest extends TestCase
         $this->assertCount(1, $statusCollection);
         $status = $statusCollection->current();
 
-        $this->assertSame('===bbb===', $status->getSubscriberId()->getValue());
+        $this->assertSame(
+            base64_encode(hex2bin('d33d1e9f91b4f41f57ab2110be4ac487')),
+            $status->getSubscriberId()->getValue()
+        );
         $this->assertSame(6, $status->getStatus());
         $this->assertSame('Not subscribed', $status->getStatusMessage());
     }
@@ -126,7 +129,7 @@ class ViberClientTest extends TestCase
     public function testSendMessage()
     {
         $authToken = 'AuthToken';
-        $subscriberId = new SubscriberId('===aaa===');
+        $subscriberId = new SubscriberId(base64_encode(hex2bin('c7272dd64f77c5be33a3975094427b98')));
 
         $httpClient = $this->getMockBuilder(HttpClientInterface::class)->getMock();
         $httpClient
@@ -165,7 +168,7 @@ class ViberClientTest extends TestCase
             $subscriberId
         );
 
-        $this->assertSame('===aaa===', $status->getSubscriberId()->getValue());
+        $this->assertSame($subscriberId->getValue(), $status->getSubscriberId()->getValue());
         $this->assertSame(0, $status->getStatus());
         $this->assertSame('ok', $status->getStatusMessage());
     }
