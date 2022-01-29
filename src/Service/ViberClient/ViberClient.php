@@ -8,6 +8,7 @@ use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
 use Sokil\Viber\Notifier\Message\AbstractMessage;
 use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiRequestError;
+use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiResponseError;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\Status;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
 use Sokil\Viber\Notifier\Tools\Http\Client\HttpClientInterface;
@@ -63,7 +64,7 @@ class ViberClient implements ViberClientInterface
                 ],
                 $query
             );
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ViberApiRequestError(
                 'Error requesting Viber server to set web hook',
                 $e->getCode(),
@@ -73,12 +74,16 @@ class ViberClient implements ViberClientInterface
 
         // handle response error
         if (!isset($response['status']) || $response['status'] !== Status::OK) {
-            throw new ViberApiRequestError(
+            $exception = new ViberApiResponseError(
                 sprintf(
                     'Viber server returns error "%s" while trying to set web hook',
                     isset($response['status_message']) ? $response['status_message'] : 'none'
                 )
             );
+
+            $exception->setResponse($response);
+
+            throw $exception;
         }
     }
 

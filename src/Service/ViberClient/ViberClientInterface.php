@@ -8,6 +8,7 @@ use Sokil\Viber\Notifier\Entity\SubscriberId;
 use Sokil\Viber\Notifier\Entity\SubscriberIdCollection;
 use Sokil\Viber\Notifier\Message\AbstractMessage;
 use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiRequestError;
+use Sokil\Viber\Notifier\Service\ViberClient\Exception\ViberApiResponseError;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\Status;
 use Sokil\Viber\Notifier\Service\ViberClient\Status\StatusCollection;
 
@@ -24,6 +25,7 @@ interface ViberClientInterface
      * @param array|null $eventTypes If null, subscribe to all events. Possible values (message, delivered, seen, failed, subscribed, unsubscribed, conversation_started)
      *
      * @throws ViberApiRequestError
+     * @throws ViberApiResponseError
      */
     public function setWebHookUrl(string $url, array $eventTypes = null);
 

@@ -23,6 +23,7 @@ class SetWebHookCommandHandler implements CommandHandlerInterface
     }
 
     /**
+     * @param SetWebHookCommand $command
      */
     public function handle($command)
     {
