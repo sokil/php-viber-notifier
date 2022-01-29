@@ -77,8 +77,8 @@ class ViberClient implements ViberClientInterface
         if (!isset($response['status']) || $response['status'] !== Status::OK) {
             $exception = new ViberApiResponseError(
                 sprintf(
-                    'Viber server returns error "%s" while trying to set web hook',
-                    isset($response['status_message']) ? $response['status_message'] : 'none'
+                    'Viber server returns status "%s" while trying to set web hook',
+                    isset($response['status']) ? $response['status'] : 'none'
                 )
             );
 
