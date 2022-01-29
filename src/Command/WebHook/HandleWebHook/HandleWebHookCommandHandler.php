@@ -19,7 +19,7 @@ class HandleWebHookCommandHandler implements CommandHandlerInterface
     private $subscriberRepository;
 
     /**
-     * @var EventDispatcherInterface
+     * @var EventDispatcherInterface|null
      */
     private $eventDispatcher;
 
