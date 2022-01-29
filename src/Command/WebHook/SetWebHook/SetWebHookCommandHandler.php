@@ -36,8 +36,6 @@ class SetWebHookCommandHandler implements CommandHandlerInterface
             );
         }
 
-        $response = $this->viberClient->setWebHookUrl($command->getUrl());
-
-        return $response;
+        $this->viberClient->setWebHookUrl($command->getUrl());
     }
 }
