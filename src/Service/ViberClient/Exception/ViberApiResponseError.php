@@ -18,4 +18,12 @@ class ViberApiResponseError extends \Exception
     {
         $this->response = $response;
     }
+
+    /**
+     * @return array
+     */
+    public function getResponse(): array
+    {
+        return $this->response;
+    }
 }
